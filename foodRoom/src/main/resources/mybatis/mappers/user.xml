@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.user">
+	
+	<resultMap id="userResult" type="com.dining.vo.UserVO">
+		<result	property="fr_id"		column="fr_id"/>
+		<result property="fr_pwd"		column="fr_pwd"/>
+		<result property="fr_name"		column="fr_name"/>
+		<result property="fr_p_number"	column="fr_p_number"/>
+		<result property="fr_email"		column="fr_email"/>
+		<result property="fr_class"		column="fr_class"/>
+		<result property="fr_date"		column="fr_date"/>
+	</resultMap>
+	
+	<!-- 회원 가입 처리 -->
+	<insert id="addUser" parameterType="com.dining.vo.UserVO">
+		<![CDATA[
+		INSERT INTO fr_user (fr_id, fr_pwd, fr_name, fr_p_number, fr_email, fr_class)
+		VALUES (#{fr_id}, #{fr_pwd}, #{fr_name}, #{fr_p_number}, #{fr_email}, #{fr_class})
+		]]>
+	</insert>
+	
+
+	
+	
+</mapper>
+
+
+
+
