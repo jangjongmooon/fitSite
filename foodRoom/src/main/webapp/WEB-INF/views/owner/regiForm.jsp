@@ -34,13 +34,14 @@
 				</tr>	
 				<tr>
 					<td>
-						<span class="">업체 주 메뉴</span>
+						<span class="">업체 주메뉴</span>
 					</td>
 					<td>
 						<select name="fr_menu" id="">
 							<option value="한식" selected>한식</option>
 							<option value="중식">중식</option>
-							<option value="양식">양식</option>
+							<option value="일식">일식</option>
+							<option value="양식">양식</option>	
 							<option value="기타">기타</option>
 						</select>			
 					</td>

@@ -52,22 +52,28 @@
 						<td><input class="" type="text" maxlength="94" name="fr_personNo" id="fr_personNo" value="" placeholder="룸 정원을 입력해 주세요."/></td>
 					</tr>		
 					<tr>
-						<td class="">
-								<span class="">[미리보기]</span><br/>
-								<div class="">
-								<input id="" type="file" name="fr_imageFile" onchange="readURL(this);" style="display:none;"/>
-								</div>	
-								<img id=""/><br/>
-								<label for="" class="">▶파일 첨부</label>
+						<td class=""> <!-- viewSide -->
+							<span class="">현재사진</span><br/>
+							<!-- 파일 첨부 버튼 누르고 아무것도 선택안한 경우, 경로 값이 null이 되는데 그 때 원래 value를 넣어주기 위함 -->	
+							<input type="hidden" name="originalImageFileName" value=""/>
+							<!-- 외부 경로 이미지 불러오기 -->
+							<a href="" target="_blank" class="imgLinkText">[확대보기]</a>
+							<img id="" usemap="#test" width="120" height="120" src=""/><br/>							
+							<map name="test">
+								<area shape="default" coords="10,8,150,292" href="" target="_blank"/>
+							</map>
+							
+							<input type="file" name="" id="" onchange="readURL(this);" style="display:none;" disabled/>
+							<label for="" class="">▶파일 첨부</label>
 						</td>
-					</tr>
+					</tr>	
 					<tr>
 						<td class="">
-								<div class="">
-									<br/>
-									<button id="reviseRoomInfoBtn" class="">룸 수정하기</button>
-									<button type="button" id="" onclick="location.href=''">취소하기</button>
-								</div>
+							<div class="">
+								<br/>
+								<button id="reviseRoomInfoBtn" class="">룸 수정하기</button>
+								<button type="button" id="" onclick="location.href=''">취소하기</button>
+							</div>
 						</td>
 					</tr>	
 				</table>	

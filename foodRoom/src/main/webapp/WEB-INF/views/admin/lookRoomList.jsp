@@ -10,27 +10,37 @@
 	<title>승인된 업체관리</title>
 		<link href="${contextPath}/css/ezen.css" rel="stylesheet">    
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="">
 	
-	<button type="button" id="" onclick="location.href=''">룸 추가</button>
-
-    <!-- 업체등록 승인요청란 -->
+	<div><button type="button" id="" onclick=>룸 추가</button></div>
 		
-	<span class="">승인된 업체목록</span>		
-               		
-		<c:forEach var="" items="">
-			<div><img id="originalImage" usemap="#test" width="120" height="120" src=""/></div>
-			<div></div>
-			<button type="button" id="" onclick="location.href=''">수정</button>
-			<button type="button" id="" onclick="location.href=''">삭제</button>
-				
-					 
-		</c:forEach>
-
+	<div><span class="">승인된 업체목록</span>
 	
+		<c:forEach var="" items="">
+			<div style="width:200px; height:150px; border:1px solid red; float:left;"><img id="originalImage" usemap="" width="120" height="120" src=""/></div>
+			<div style="width:200px; height:150px; border:1px solid red; float:left;">
+				<table id="">
+				<tr>
+					<td><span class="mypageText">룸이름 : </span></td>
+					<td><span class="mypageResultText"></span></td>
+				</tr>
+				<tr>
+					<td><span class="mypageText">룸정원 : </span></td>
+					<td><span class="mypageResultText"></span></td>
+				</tr>
+
+			</table>
+				<div>
+					<button type="button" id="" onclick=>수정</button>
+					<button type="button" id="" onclick=>삭제</button>
+				</div>
+			</div>	
+		</c:forEach>			 
+	</div>	
+
+
 
 </div>
 </body>

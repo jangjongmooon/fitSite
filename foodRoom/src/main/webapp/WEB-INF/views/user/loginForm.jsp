@@ -8,18 +8,16 @@
 	<meta charset="UTF-8">
 	<title>로그인 페이지</title>
 	
-	<style>
 
-	</style>
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+
 
 <body>
 
 <div id="loginField">
-	<form method="post" name="" id="loginForm">
+	<form method="post" name="" id="loginForm" action="${contextPath}/login.do">
 		<table id="loginTable">
 			<tr>
 				<th><span>로그인</span></th>
@@ -33,7 +31,7 @@
 				<td><input type="password" name="" id="" placeholder="PWD 입력" /></td>
 			</tr>
 			<tr>
-				<td><button type="button" class="">로그인</button></td>
+				<td><button type="submit" class="">로그인</button></td>
 			</tr>
 			<tr>
 				<td><a href="${contextPath}/imsi/findForm.do" onclick="window.open(this.href,'_blank','width=500,height=500, scrollbars=no, resizable=no');return false;" class="">아이디/비밀번호 찾기</a></td>
