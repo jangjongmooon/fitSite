@@ -35,7 +35,7 @@
 			</tr>
 			<tr>
 				<td><a href="${contextPath}/imsi/findForm.do" onclick="window.open(this.href,'_blank','width=500,height=500, scrollbars=no, resizable=no');return false;" class="">아이디/비밀번호 찾기</a></td>
-				<td><a href="${contextPath}/imsi/signUpForm.do" class="">회원가입</a></td>
+				<td><a href="${contextPath}/signUpForm.do" class="">회원가입</a></td>
 			</tr>
 		</table>
 	</form>
