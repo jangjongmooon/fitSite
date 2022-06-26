@@ -38,13 +38,13 @@ public class UserControllerImpl implements UserController {
 	}
 	
 	//-----------------------------------------------------------------------------------------------------------
-	// 회원가입 폼
+	// 회원가입 페이지
 	//-----------------------------------------------------------------------------------------------------------
-	@RequestMapping(value="/signUpForm.do", method=RequestMethod.GET)
+	@RequestMapping(value="/signUpPage.do", method=RequestMethod.GET)
 	public ModelAndView signUpForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/user/signUpForm");
+		mav.setViewName("/user/signUpPage");
 		return mav;
 	}
 	
@@ -62,18 +62,18 @@ public class UserControllerImpl implements UserController {
 	}
 	
 	//-----------------------------------------------------------------------------------------------------------
-	// 회원 가입 처리
+	// 회원가입
 	//-----------------------------------------------------------------------------------------------------------
 	@Override
-	@RequestMapping(value="/user/addUser.do", method=RequestMethod.POST)
-	public ModelAndView addUser(@ModelAttribute("userDTO") UserDTO userDTO, HttpServletRequest request, HttpServletResponse response)
+	@RequestMapping(value="/signUp.do", method=RequestMethod.POST)
+	public ModelAndView signUp(@ModelAttribute("userDTO") UserDTO userDTO, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		
-		System.out.println("controller addUser userDTO ==>" + userDTO);
+		System.out.println("controller signUp userDTO ==>" + userDTO);
 		
-		int result = userDAO.addUser(userDTO);
+		int result = userDAO.signUp(userDTO);
 		
-		System.out.println("controller addUser 결과 ==>" + result);
+		System.out.println("controller signUp 결과 ==>" + result);
 		
 		ModelAndView mav = new ModelAndView();
 		mav = new ModelAndView("redirect:/index.do");
@@ -83,8 +83,8 @@ public class UserControllerImpl implements UserController {
 	//-----------------------------------------------------------------------------------------------------------
 	// 회원가입 취소
 	//-----------------------------------------------------------------------------------------------------------
-	@RequestMapping(value="/loginForm.do", method=RequestMethod.GET)
-	public ModelAndView deleteSignUp(@ModelAttribute("userDTO") UserDTO userDTO, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping(value="/cancelMembership.do", method=RequestMethod.GET)
+	public ModelAndView cancelMembership(@ModelAttribute("userDTO") UserDTO userDTO, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:/index.do");
@@ -94,11 +94,11 @@ public class UserControllerImpl implements UserController {
 	//-----------------------------------------------------------------------------------------------------------
 	// 로그인 페이지 이동
 	//-----------------------------------------------------------------------------------------------------------
-	@RequestMapping(value="/loginPage.do", method=RequestMethod.GET)
-	public ModelAndView deleteSignUp(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping(value="/goLoginPage.do", method=RequestMethod.GET)
+	public ModelAndView goLoginPage(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/user/loginForm");
+		mav.setViewName("/user/loginPage");
 		return mav;
 	}		
 	
@@ -118,7 +118,7 @@ public class UserControllerImpl implements UserController {
 		if(loginInfo == null) { // 로그인 정보가 없을 경우
 			// 다시 로그인 페이지로
 			rAttr.addAttribute("result", "loginFailed");
-			mav = new ModelAndView("redirect:/login.do");
+			mav = new ModelAndView("redirect:/loginPage.do");
 			
 		} else { // 로그인 정보가 있는 경우
 			// 입력한 id, pwd 가 등록된 id, pwd와 같을 경우
@@ -145,12 +145,12 @@ public class UserControllerImpl implements UserController {
 	}
 	
 	//-----------------------------------------------------------------------------------------------------------
-	// id pwd 찾기 폼
+	// id pwd 찾기 페이지로 가기
 	//-----------------------------------------------------------------------------------------------------------
-	@RequestMapping(value="/findForm.do", method=RequestMethod.GET)
-	private ModelAndView findForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping(value="/goFindIdPwdForm.do", method=RequestMethod.GET)
+	private ModelAndView findIdPwdForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/user/findForm");
+		mav.setViewName("/user/findIdPwdForm");
 		return mav;
 	}
 	
@@ -196,10 +196,10 @@ public class UserControllerImpl implements UserController {
 	}
 	
 	//-----------------------------------------------------------------------------------------------------------
-	// 마이페이지 폼
+	// 마이페이지로 가기
 	//-----------------------------------------------------------------------------------------------------------
-	@RequestMapping(value="/myPageForm.do", method=RequestMethod.GET)
-	private ModelAndView myPageForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping(value="/goMyPage.do", method=RequestMethod.GET)
+	private ModelAndView myPage(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
 		
@@ -209,14 +209,14 @@ public class UserControllerImpl implements UserController {
 	}
 	
 	//-----------------------------------------------------------------------------------------------------------
-	// 마이페이지 변경 폼
+	// 마이페이지 변경폼으로 가기
 	//-----------------------------------------------------------------------------------------------------------
-	@RequestMapping(value="/myPageUpdateForm.do", method=RequestMethod.GET)
-	private ModelAndView myPageUpdateForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping(value="/goUpdateMyPage.do", method=RequestMethod.GET)
+	private ModelAndView goUpdateMyPageForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
 		
-		mav.setViewName("/user/myPageUpdateForm");
+		mav.setViewName("/user/updateMyPage");
 		mav.addObject("userDTO", userDTO);
 		return mav;
 	}		
@@ -224,11 +224,11 @@ public class UserControllerImpl implements UserController {
 	//-----------------------------------------------------------------------------------------------------------
     // 마이페이지 변경하기
     //-----------------------------------------------------------------------------------------------------------
-    @RequestMapping(value="/myPageUpdateGo.do", method=RequestMethod.POST)
-    public ModelAndView myPageUpdateGo(@ModelAttribute("userDTO") UserDTO userDTO, HttpServletRequest request, HttpServletResponse response)
+    @RequestMapping(value="/updateMyPage.do", method=RequestMethod.POST)
+    public ModelAndView updateMyPage(@ModelAttribute("userDTO") UserDTO userDTO, HttpServletRequest request, HttpServletResponse response)
           throws Exception {
     
-       userDAO.myPageUpdateGo(userDTO);
+       userDAO.updateMyPage(userDTO);
 
        HttpSession session = request.getSession();
       
@@ -242,7 +242,7 @@ public class UserControllerImpl implements UserController {
        session.setAttribute("fr_email", userDTO.getFr_email());
        session.setAttribute("fr_pwd", userDTO.getFr_pwd());
       
-       ModelAndView mav = new ModelAndView("redirect:myPage.do");
+       ModelAndView mav = new ModelAndView("redirect:goMyPage.do");
       
       
        return mav;

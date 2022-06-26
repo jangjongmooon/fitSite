@@ -7,8 +7,9 @@
 <head>
 	<meta charset="UTF-8">
 	<title>회원가입</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <script>
 	
 	function fnc_process() { // 아이디 중복 검사
@@ -20,7 +21,7 @@
 	        
 				$.ajax({	// 아이디 중복 체크 기능
 						type:		"post",
-						url:		"${contextPath}/user/checkId.do",
+						url:		"${contextPath}/checkId.do",
 						dataType:	"json",
 						async : 	false,
 						data:		{fr_id: _id1},	
@@ -49,17 +50,39 @@
 				});
 	}
 
+	function pwTest() {
+		
+		   var RegExp = /^[a-zA-Z0-9]{4,12}$/; // 비밀번호 유효성 검사
+		   var objPwd = document.getElementById("fr_pwd"); // 비밀번호 입력값 받기
+		   
+		   if(!RegExp.test(objPwd.value)) {
+			  $("#pwdSuccess").html("비밀번호는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.");
+			  $("#pwdSuccess").css("color","green")
+		   }
+		   else if($("#fr_pwd").val() == $("#rePwd").val() && $("#fr_pwd").val()!="" ) {
+		      $("#pwdSuccess").html("비밀번호가 일치합니다.");
+		      $("#pwdSuccess").css("color","blue")
+		   }
+		   else if($("#fr_pwd").val() != $("#rePwd").val()) {
+		      $("#pwdSuccess").html("비밀번호가 일치하지 않습니다.");
+		      $("#pwdSuccess").css("color","red")
+		   }
+		
+	}
+	
 	$(document).ready(function() {				
 		
 		$("#signUpBtn").on("click", function() {
-			var RegExp = /^[a-zA-Z0-9]{4,12}$/; // 비밀번호 유효성 검사
-			var e_RegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 유효성 검사
+			
+			var RegExp = /^[a-zA-Z0-9]{4,12}$/; // 비밀번호 유효성 검사		
 		    var n_RegExp = /^[가-힣]{2,12}$/; //이름 유효성검사
-		    var p_RegExp = /^(?:(010-\d{4})|(01[1|6|7|8|9]-\d{3,4}))-(\d{4})$/; // 연락처
+		    var p_RegExp = /^(?:(010-\d{4})|(01[1|6|7|8|9]-\d{3,4}))-(\d{4})$/; // 연락처 유효성 검사
+  			var e_RegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 유효성 검사
 		    
-		    var objPwd = document.getElementById("fr_pwd"); // 비밀번호 입력값 받기
-		    var objEmail = document.getElementById("fr_email"); // 이메일 입력값 받기
-		    var objName = document.getElementById("fr_name"); // 이름 입력값 받기				    				    	    
+		    var objPwd     = document.getElementById("fr_pwd"); 	 // 비밀번호 입력값 받기
+		    var objName    = document.getElementById("fr_name"); 	 // 이름 입력값 받기
+		    var objPnumber = document.getElementById("fr_p_number"); // 연락처 입력값 받기
+		    var objEmail   = document.getElementById("fr_email"); 	 // 이메일 입력값 받기
 		    
 		    // 비밀번호 유효성 검사 영역
 			if($("#fr_pwd").val() == '') {
@@ -72,12 +95,12 @@
 	            $("#fr_pwd").focus();
 	            return false;
 	        }
-			if($("#repwd").val() == '') {
+			if($("#rePwd").val() == '') {
 				alert("비밀번호 확인을 입력하십시오");
 				$("#repwd").focus();
 				return false;
 			}
-			if($("#fr_pwd").val() != $("#repwd").val()) {
+			if($("#fr_pwd").val() != $("#rePwd").val()) {
 				alert("비밀번호가 일치하지 않습니다.");
 				$("#repwd").focus();
 				return false;
@@ -90,19 +113,19 @@
 				return false;
 			}
 			if(!n_RegExp.test(objName.value)) {
-	            alert("특수문자,영어,숫자는 사용할수 없습니다. 한글만 입력하여주세요.");
+	            alert("이름에 특수문자,영어,숫자는 사용할수 없습니다. 한글만 입력하여주세요.");
 	            $("#fr_name").focus();
 	            return false;
 	        }
 			
-			// 전화번호 유효성 검사 영역
+			// 연락처 유효성 검사 영역
 			if($("#fr_p_number").val() == '') {
-				alert("전화번호를 입력하십시오");
+				alert("연락처를 입력하십시오");
 				$("#fr_p_number").focus();
 				return false;
 			}
 			if(!p_RegExp.test(objPnumber.value)) {
-		         alert("올바른 전화번호를 입력해 주세요. ex)010-9999-9999");
+		         alert("올바른 연락처를 입력해 주세요. ex)010-9999-9999");
 		         $("#fr_p_number").focus();
 		         return false;
 		     }
@@ -119,33 +142,20 @@
 	            return false;
 	        }
 	        
-			document.signUpForm.action = "${contextPath}/user/addUser.do";
+			document.signUpForm.action = "${contextPath}/addUser.do";
 			document.signUpForm.submit();
 		
 		}); // submit버튼		
 		
 	}); // function	
 	
-	function pwTest() {
-		   if($("#fr_pwd").val() == $("#repwd").val() && $("#fr_pwd").val()!="" ) {
-		      $("#pwdSuccess").html("비밀번호가 일치합니다.");
-		      $("#pwdSuccess").css("color","blue")
-		   }
-		   else if($("#fr_pwd").val() != $("#repwd").val()) {
-		      $("#pwdSuccess").html("비밀번호가 일치하지 않습니다.");
-		      $("#pwdSuccess").css("color","red")
-		   }
-		   else{
-		      $("#pwdSuccess").html("비밀번호를 입력해주세요.");
-		      $("#pwdSuccess").css("color","black")
-		   }
-	}
+
 </script>
 
 <body>
 	<div id="signUpField">
 		<span>회원가입</span>
-		<form id="signUpForm" name="" method="post">	
+		<form id="signUpForm" name="signUpForm" method="post">	
 			<table id="signUpTable">
 				<tr>
 					<td>
@@ -163,30 +173,30 @@
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input type="password" name="fr_pwd" id="" /></td>
+					<td><input type="password" name="fr_pwd" id="fr_pwd" /></td>
 				</tr>
 				<tr>
 					<td>비밀번호 확인</td>
-					<td><input type="password" name="rePwd" id="" /></td>
+					<td><input type="password" name="rePwd" id="rePwd" oninput="pwTest();" /></td>
 				</tr>
 				<tr>
-					<td><div id="pwdSuccess">비밀번호 일치 확인 영역</div></td>
+					<td><div id="pwdSuccess">비밀번호를 입력해주세요.</div></td>
 				</tr>
 				<tr>
 					<td>이름</td>
-					<td><input type="text" name="fr_name" id="" /></td>
+					<td><input type="text" name="fr_name" id="fr_name" /></td>
 				</tr>
 				<tr>
 					<td>연락처</td>
-					<td><input type="text" name="fr_p_number" id="" /></td>
+					<td><input type="text" name="fr_p_number" id="fr_p_number" /></td>
 				</tr>
 				<tr>
 					<td>이메일</td>
-					<td><input type="text" name="fr_email" id="" /></td>
+					<td><input type="text" name="fr_email" id="fr_email" /></td>
 				</tr>
 				<tr>
 					<td><button type="button" id="signUpBtn" >가입하기</button></td>
-					<td><button type="button" id="" onclick="location.href='${contextPath}/loginForm.do'">가입취소</button></td>					
+					<td><button type="button" id="" onclick="location.href='${contextPath}/cancelMembership.do'">가입취소</button></td>					
 				</tr>
 			</table>
 		</form>

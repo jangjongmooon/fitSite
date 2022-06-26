@@ -13,26 +13,26 @@
 <body>
 	<div id="myPageField">
 		<span>MyPage</span>
-		<form method="post" action="${contextPath}/imsi/myPageUpdateForm.do" id="">
+		<form method="get" action="${contextPath}/imsi/myPageUpdateForm.do" id="">
 			<table>
 				<tr>
 					<td>아이디</td>
-					<td><input type="text" id="" name="" value="아이디" readonly/></td>
+					<td><input type="text" name="fr_id" value="${fr_id}" readonly/></td>
 				</tr>
 				<tr>
 					<td>이름</td>
-					<td><input type="text" id="" name="" value="이름" readonly/></td>
+					<td><input type="text" name="fr_name" value="${fr_name}" readonly/></td>
 				</tr>
 				<tr>
 					<td>연락처</td>
-					<td><input type="text" id="" name="" value="연락처" readonly/></td>
+					<td><input type="text" name="fr_p_number" value="${fr_p_number}" readonly/></td>
 				</tr>
 				<tr>
 					<td>이메일</td>
-					<td><input type="text" id="" name="" value="이메일" readonly/></td>
+					<td><input type="text" name="fr_email" value="${fr_email}" readonly/></td>
 				</tr>
 				<tr>	
-					<td><input type="submit" value="수정하기"/></td>
+					<td><input type="button" onclick="location.href='${contextPath}/goUpdateMyPage.do'" value="수정하기"/></td>
 				</tr>
 			</table>
 		</form>

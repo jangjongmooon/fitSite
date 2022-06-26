@@ -10,16 +10,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.dining.dto.UserDTO;
 
 public interface UserController {
-	
-	//-----------------------------------------------------------------------------------------------------------
-	// 회원 가입 폼 불러오기
-	//-----------------------------------------------------------------------------------------------------------
-	public ModelAndView signUpForm(HttpServletRequest request, HttpServletResponse response) throws Exception;	
-	
+		
 	//-----------------------------------------------------------------------------------------------------------
 	// 회원 가입 처리
 	//-----------------------------------------------------------------------------------------------------------
-	public ModelAndView addUser(@ModelAttribute("info") UserDTO userDTO,
+	public ModelAndView signUp(@ModelAttribute("info") UserDTO userDTO,
 			HttpServletRequest request, HttpServletResponse response) throws Exception;
 		
 	//-----------------------------------------------------------------------------------------------------------

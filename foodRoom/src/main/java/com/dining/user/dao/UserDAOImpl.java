@@ -14,13 +14,23 @@ public class UserDAOImpl implements UserDAO {
 	private SqlSession sqlSession;
 	
 	//-----------------------------------------------------------------------------------------------------------
+	// ID 중복 체크
+	//-----------------------------------------------------------------------------------------------------------
+	@Override
+	public int checkId(UserDTO userDTO) throws DataAccessException {
+		System.out.println("dao checkId ==>" + userDTO);
+		int result = sqlSession.selectOne("mapper.user.checkId", userDTO);
+		return result;
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------
 	// 회원 가입 처리
 	//-----------------------------------------------------------------------------------------------------------
 	@Override
-	public int addUser(UserDTO userDTO) throws DataAccessException {
-		System.out.println("addUser userDTO ==>" + userDTO);
-		int result = sqlSession.insert("mapper.user.addUser", userDTO);
-		System.out.println("addUser result ==>" + result);
+	public int signUp(UserDTO userDTO) throws DataAccessException {
+		System.out.println("addUser signUp ==>" + userDTO);
+		int result = sqlSession.insert("mapper.user.signUp", userDTO);
+		System.out.println("signUp result ==>" + result);
 		return result;
 	}
 
@@ -30,10 +40,10 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public UserDTO login(UserDTO userDTO) throws DataAccessException {
 		System.out.println("userDTO 로그인 ==>" + userDTO);
-		UserDTO result = sqlSession.selectOne("mapper.mapper.login", userDTO);
+		UserDTO result = sqlSession.selectOne("mapper.user.login", userDTO);
 		System.out.println("userDTO 로그인 결과 ==>" + result);
 		return result;
-	}
+	}	
 	
 	//-----------------------------------------------------------------------------------------------------------
 	// ID 찾기
@@ -41,17 +51,9 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public UserDTO findId(UserDTO userDTO) throws DataAccessException {
 		System.out.println("dao id찾기 ==>" + userDTO);
-		UserDTO result = sqlSession.selectOne("mapper.mapper.findId", userDTO);
+		UserDTO result = sqlSession.selectOne("mapper.user.findId", userDTO);
 		System.out.println("dao id찾기 결과 ==>" + result);
 		return result;
-	}
-
-	//-----------------------------------------------------------------------------------------------------------
-	// ID 중복 체크
-	//-----------------------------------------------------------------------------------------------------------
-	@Override
-	public int checkId(UserDTO userDTO) throws DataAccessException {
-		return sqlSession.selectOne("mapper.mapper.checkId", userDTO);
 	}
 	
 	//-----------------------------------------------------------------------------------------------------------
@@ -60,7 +62,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public UserDTO findPwd(UserDTO userDTO) throws DataAccessException {
 		System.out.println("dao pwd찾기 ==>" + userDTO);
-		UserDTO result = sqlSession.selectOne("mapper.mapper.findPwd", userDTO);
+		UserDTO result = sqlSession.selectOne("mapper.user.findPwd", userDTO);
 		System.out.println("dao pwd찾기 결과 ==>" + result);
 		return result;
 	}
@@ -69,10 +71,10 @@ public class UserDAOImpl implements UserDAO {
 	// 마이페이지 변경하기
 	//-----------------------------------------------------------------------------------------------------------
 	@Override
-	public int myPageUpdateGo(UserDTO userDTO) throws DataAccessException {
-		System.out.println("테스트값 ==>" + userDTO);
-		int result = sqlSession.update("mapper.mapper.myPageUpdateGo", userDTO);
-		System.out.println("결과값 ==>" + result);
+	public int updateMyPage(UserDTO userDTO) throws DataAccessException {
+		System.out.println("dao 마이페이지 변경하기 ==>" + userDTO);
+		int result = sqlSession.update("mapper.user.updateMyPage", userDTO);
+		System.out.println("dao 마이페이지 결과값 ==>" + result);
 		return result; 
 	}
 	
