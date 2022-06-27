@@ -8,7 +8,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>승인된 업체관리</title>
-		<link href="${contextPath}/css/ezen.css" rel="stylesheet">    
+		<link href="${contextPath}/css/foodroom.css" rel="stylesheet">   
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
@@ -24,22 +24,28 @@
 		
 	</form>
 
-    <!-- 업체등록 승인요청란 -->
+     <!-- 업체등록 승인요청란 -->
 		
-	<span class="">승인된 업체목록</span>		
+	<span class="">승인업체 목록</span>		
        <table class="">           		
 		<tr>
-			<th><b>업체주소</b></th>
+			<th><b>아이디</b></th>
 			<th><b>업체명</b></th>
-			<th><b>룸정보 보기</b></th>
+			<th><b>업체주소</b></th>
+			<th><b>업체연락처</b></th>
+			<th><b>업체주메뉴</b></th>
+			<th><b>룸정보 추가</b></th>
 		</tr>
-		<c:forEach var="" items="">
+		<c:forEach var="approveOk" items="${approveOk}">
 			<tr>
-
-				<td></td>
-				<td></td>
-				<td class=""><a href="" class="">아이콘 넣기</a></td>	 
-
+				<td>${approveOk.fr_id}</td>
+				<td>${approveOk.fr_store_name}</td>
+				<td>${approveOk.fr_address}</td>
+				<td>${approveOk.fr_store_p_number}</td>
+				<td>${approveOk.fr_menu}</td>
+				<td><a href="${contextPath}/goRoomListPage.do?fr_no=${approveOk.fr_no}" 
+					   onclick="return confirm('[${approveOk.fr_store_name}] 룸 정보를 보겠습니까?');" class="">룸정보 보기</a></td>
+			</tr>
 		</c:forEach>
 	</table>
 	

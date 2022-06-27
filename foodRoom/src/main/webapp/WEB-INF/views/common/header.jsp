@@ -7,7 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>header</title>
-	<link href="${contextPath}/css/fr.css" rel="stylesheet">
+	<link href="${contextPath}/css/foodroom.css" rel="stylesheet">   
 
 	<!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -44,12 +44,12 @@
 						</c:if>
 						<c:if test="${fr_class == 02}">
 							<a href="${contextPath}/goMyPage.do"><input type="button" value="내정보" class=""/></a>
-							<a href="${contextPath}/regiForm.do"><input type="button" value="업체등록" class=""/></a>
+							<a href="${contextPath}/goRegiFoodRoomPage.do"><input type="button" value="업체등록" class=""/></a>
 							<a href="${contextPath}/logout.do" onclick="return confirm('정말 로그아웃 하시겠습니까?');"><input type="button" value="로그아웃" class=""/></a>
 						</c:if>
 						<c:if test="${fr_class == 01}">
-							<a href="${contextPath}/approveForm.do"><input type="button" value="업체 승인" class=""/></a>
-							<a href="${contextPath}/manageFoodRoom.do"><input type="button" value="승인 업체 관리" class=""/></a>
+							<a href="${contextPath}/goApprovePage.do"><input type="button" value="업체 승인" class=""/></a>
+							<a href="${contextPath}/goManageFoodRoomPage.do"><input type="button" value="승인 업체 관리" class=""/></a>
 							<a href="${contextPath}/logout.do" onclick="return confirm('정말 로그아웃 하시겠습니까?');"><input type="button" value="로그아웃" class=""/></a>
 						</c:if>
 					</div>

@@ -55,7 +55,7 @@
 						<td class="">
 								<span class="">[미리보기]</span><br/>
 								<div class="">
-								<input id="" type="file" name="fr_imageFile" onchange="readURL(this);" style="display:none;"/>
+									<input id="" type="file" name="fr_imageFile" onchange="readURL(this);" style="display:none;"/>
 								</div>	
 								<img id=""/><br/>
 								<label for="" class="">▶파일 첨부</label>
