@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="mapper.room">
+
+	<resultMap id="memResult" type="com.dining.dto.RoomDTO">
+		<result	property="fr_room_no"			column="fr_room_no"/>
+		<result property="fr_no"				column="fr_no"/>
+		<result property="fr_room_name"			column="fr_room_name"/>
+		<result property="fr_room_person_no"	column="fr_room_person_no"/>
+		<result property="fr_room_image"		column="fr_room_image"/>
+	</resultMap>
+
+	<!-- 룸 정보 추가하기 -->
+	<insert id="addRoomImage" parameterType="com.dining.dto.RoomDTO">
+		INSERT INTO ezenfood.fr_room_info (fr_no, fr_room_name, fr_room_person_no, fr_room_image)
+		VALUES (#{fr_no}, #{fr_room_name}, #{fr_room_person_no}, #{fr_room_image})
+	</insert>
+	
+	<!-- 룸 목록 -->
+	<select id="roomList" parameterType="com.dining.dto.RoomDTO" resultMap="memResult">
+		SELECT	*
+		FROM	fr_room_info
+		WHERE	fr_no = #{fr_no} 
+	</select>
+	
+	<!-- 룸 목록 -->
+	<select id="mRoomList" parameterType="com.dining.dto.RoomDTO" resultMap="memResult">
+		SELECT	*
+		FROM	fr_room_info
+		WHERE	fr_no = #{fr_no}
+	</select>
+		
+</mapper>
+
+
+
+

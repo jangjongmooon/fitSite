@@ -24,10 +24,10 @@
 	$(document).ready(function() {
 		
 		   // 기입한 룸정보에 대한 유효성 검사
-		   $("#addBtn").on("click", function() {
+		   $("#addRoomInfoBtn").on("click", function() {
 		      
 		      
-		      document.addRoomInfoForm.action="";
+		      document.addRoomInfoForm.action="${contextPath}/addRoomInfo.do";
 		      document.addRoomInfoForm.submit();   
 		      
 		   });
@@ -42,14 +42,14 @@
 		<span class="">룸정보 추가</span><p/>
 		<div class="">
 			<form name="addRoomInfoForm" method="post" enctype="multipart/form-data">
-				<div style="display:none;"><input type="text" name="" value="">업체번호</div>
+				<div style="display:none;"><input type="text" name="fr_no" value="${fr_no}">업체번호</div>
 			
 				<table class="">
 					<tr>
 						<td class="">룸 이름</td>
 						<td><input class="" type="text" maxlength="94" name="fr_room_name" id="fr_room_name" placeholder="룸 이름을 입력해 주세요."/></td>
 						<td class="">룸 정원</td>
-						<td><input class="" type="text" maxlength="94" name="fr_personNo" id="fr_personNo" placeholder="룸 정원을 입력해 주세요."/></td>
+						<td><input class="" type="text" maxlength="94" name="fr_room_person_no" id="fr_room_person_no" placeholder="룸 정원을 입력해 주세요."/></td>
 					</tr>		
 					<tr>
 						<td class="">

@@ -53,40 +53,60 @@ $(function() {
 });
 </script>
 <body>
-<div class="">
-	
-	<form method="post" name="ef_alter">
-		<table id="">
-			<tr>
-				<td>예약날짜 : </td>
-	      		<td><input type="text" id="dd" class="" name="" value="" placeholder="날짜선택" readonly/></td>
-			</tr>
-		</table>
-	</form>
-		
-	<span class="">룸 목록</span>
-	
-		<c:forEach var="" items="">
-			<div style="width:200px; height:150px; border:1px solid red; float:left;"><img id="originalImage" usemap="" width="120" height="120" src=""/></div>
-			<div style="width:200px; height:150px; border:1px solid red; float:left;">
+<div class="" style="width=100%; height:100%;">
+
+	<div>룸 목록</div>
+
+	<div style="width=100%; height:4%;">
+		<form method="post" name="ef_alter">
 			<table id="">
 				<tr>
-					<td><span class="mypageText">룸이름 : </span></td>
-					<td><span class="mypageResultText"></span></td>
+					<td>예약날짜 : </td>
+		      		<td><input type="text" id="dd" class="" name="" value="" placeholder="날짜선택" readonly/></td>
 				</tr>
-				<tr>
-					<td><span class="mypageText">룸정원 : </span></td>
-					<td><span class="mypageResultText"></span></td>
-				</tr>
-
 			</table>
-			<div>
-				<button type="button" id="" onclick=>예약하기</button>
-			</div>
-			</div>	
-		</c:forEach>			 
+		</form>
+	</div>
+	
+	
+	<div>	
 		
-
+		<div class="reservationPossible">
+			<span>예약 가능</span><hr/>
+			<!-- for문 조건:예약가능한 -->
+			<div>
+				<img id="loomImage" usemap="" width="120" height="120" src="" style="float:left;"/>
+				<span class="">룸이름 : </span>
+				<span class=""></span><br/>							
+				<span class="">룸정원 : </span>
+				<span class=""></span>
+				<form>
+					예약인원<input type="number"  name="fr_room_person_no" min="1" max=""> <!-- max는 룸 정원인원 -->
+					<input type="hidden" name="fr_room_no" value="">
+					<input type="hidden" name="fr_reservation_date" id="fr_reservation_date">
+					<button type="button" id="">예약하기</button>
+					
+				</form>
+			</div>		
+		</div>
+					
+		<div class="reservatioinImpossible">
+			<span>예약 불가</span><hr/>
+			<!-- for문 조건:예약불가능한 -->
+			<div>
+				<img id="loomImage" usemap="" width="120" height="120" src="" style="float:left;"/>
+				<span class="">룸이름 : </span>
+				<span class=""></span><br/>	
+				<span class="">룸정원 : </span>
+				<span class=""></span>
+				<div>
+					<button type="button" id="">예약대기</button>
+				</div>	
+			</div>
+		</div>
+				
+	</div>	
+	
 </div>
 </body>
 </html>

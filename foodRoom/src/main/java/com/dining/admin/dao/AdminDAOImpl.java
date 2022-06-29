@@ -71,7 +71,7 @@ public class AdminDAOImpl implements AdminDAO {
 	//-----------------------------------------------------------------------------------------------------------
 	@Override
 	public int addRoomImage(RoomDTO roomDTO) throws DataAccessException {
-		System.out.println("freeBoardVO DAO ==> " + roomDTO);
+		System.out.println("addRoomImage DAO ==> " + roomDTO);
 		int result = sqlSession.insert("mapper.room.addRoomImage", roomDTO);
 		return result;
 	}

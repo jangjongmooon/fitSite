@@ -66,7 +66,7 @@
 			<c:forEach var="storeList" items="${storeList}">
 				<tr>
 					<td>${storeList.fr_address}</td>
-					<td>${storeList.fr_store_name}</td>
+					<td><a href="${contextPath}/goMemberRoomListPage.do?fr_no=${storeList.fr_no}" class="boardLinkText">${storeList.fr_store_name}</a></td>
 					<td>${storeList.fr_store_p_number}</td>
 					<td>${storeList.fr_menu}</td>
 				</tr>  				

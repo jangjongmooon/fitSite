@@ -31,16 +31,16 @@ public class AdminControllerImpl implements AdminController {
 
 	@Autowired
 	private AdminDAO adminDAO;
-	private static String FREEBOARD_IMAGE_REPO = "C:\\data\\room_image";
+	private static String ROOM_IMAGE_REPO = "C:\\data\\room_image";
 	
 	//-----------------------------------------------------------------------------------------------------------
 	// 미승인된 업체  List
 	//-----------------------------------------------------------------------------------------------------------
-	@RequestMapping(value="/goApprovePage.do", method=RequestMethod.GET)
+	@RequestMapping(value="/goApproveFoodRoomPage.do", method=RequestMethod.GET)
 	private ModelAndView unapproveFoodRoomList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 				
 		List<StoreDTO> approve = adminDAO.unapproveFoodRoomList();	
-		ModelAndView mav = new ModelAndView("/admin/approvePage");
+		ModelAndView mav = new ModelAndView("/admin/approveFoodRoomPage");
 		mav.addObject("approve", approve);
 		
 		return mav;
@@ -53,7 +53,7 @@ public class AdminControllerImpl implements AdminController {
 	public ModelAndView approveFoodRoom(@ModelAttribute("storeDTO") StoreDTO storeDTO, HttpServletRequest request, HttpServletResponse response) throws Exception {
 	   
 	   adminDAO.approveFoodRoom(storeDTO);
-	   ModelAndView mav = new ModelAndView("redirect:/goApprovePage.do");
+	   ModelAndView mav = new ModelAndView("redirect:/goApproveFoodRoomPage.do");
 		   
 	   return mav;
 	}
@@ -74,28 +74,30 @@ public class AdminControllerImpl implements AdminController {
 	}
 	
 	//-----------------------------------------------------------------------------------------------------------
-	// 룸 목록 페이지 가기
+	// 룸목록 페이지 가기
 	//-----------------------------------------------------------------------------------------------------------
 	@RequestMapping(value="/goRoomListPage.do", method=RequestMethod.GET)
 	private ModelAndView RoomList(@RequestParam("fr_no") int fr_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		List<RoomDTO> roomList = adminDAO.roomList(fr_no);	// 승인 요청 List로 보여주기	
 		 
-		ModelAndView mav = new ModelAndView("/admin/RoomListPage");
+		ModelAndView mav = new ModelAndView("/admin/roomListPage");
 		mav.addObject("roomList", roomList);
-		mav.addObject("room_no", fr_no);
+		mav.addObject("fr_no", fr_no);
 		
 		return mav;
 	}
 	
 	//-----------------------------------------------------------------------------------------------------------
-	// 룸정보 추가 페이지
+	// 룸정보 추가페이지 가기
 	//-----------------------------------------------------------------------------------------------------------
-	@RequestMapping(value="/addRoomInfo.do", method=RequestMethod.GET)
-	private ModelAndView addRoomInfo(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping(value="/goAddRoomInfoPage.do", method=RequestMethod.GET)
+	private ModelAndView addRoomInfoPage(@RequestParam("fr_no") int fr_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("/admin/addRoomInfoPage");
+		mav.addObject("fr_no", fr_no);
+		
 		return mav;
 	}
 	
@@ -103,51 +105,48 @@ public class AdminControllerImpl implements AdminController {
 	// 룸정보 추가
 	//-----------------------------------------------------------------------------------------------------------
 	@Override
-	@RequestMapping(value="/addRoomInfoGo.do", method=RequestMethod.POST)
-	public ModelAndView addRoomInfo(@ModelAttribute("RoomDTO") RoomDTO roomDTO, HttpServletRequest request, HttpServletResponse response)
+	@RequestMapping(value="/addRoomInfo.do", method=RequestMethod.POST)
+	public ModelAndView addRoomInfo(@ModelAttribute("roomDTO") RoomDTO roomDTO, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		
-		System.out.println("addPosts ==>" + roomDTO);
 
 		ModelAndView mav = new ModelAndView();
 		
-		Map<String, String> roomImageMap	= uploadRoomImage(request, response);
+		System.out.println(roomDTO);
+		
+		Map<String, String> roomImageMap	= uploadRoomInfo(request, response);
 
-		System.out.println("Map ==> " + roomImageMap);
 		roomDTO.setFr_no(Integer.parseInt(roomImageMap.get("fr_no")));
 		roomDTO.setFr_room_name(roomImageMap.get("fr_room_name"));
 		roomDTO.setFr_room_person_no(roomImageMap.get("fr_room_person_no"));
 		roomDTO.setFr_room_image(roomImageMap.get("fr_room_image"));
-		System.out.println("RoomDTO ==> " + roomDTO);
+		System.out.println(roomDTO);
 		
-		int result = adminDAO.addRoomImage(roomDTO);
-		System.out.println("게시글 추가 controller 결과 freeboard_no ==> " + result);
-		
+		int result = adminDAO.addRoomImage(roomDTO);		
 
 		if(roomImageMap.get("fr_room_image") != null && roomImageMap.get("fr_room_image").length() != 0) {
-			File srcFile = new File(FREEBOARD_IMAGE_REPO + "\\" + roomImageMap.get("fr_room_image"));
-			File destDir = new File(FREEBOARD_IMAGE_REPO + "\\" + result);
+			File srcFile = new File(ROOM_IMAGE_REPO + "\\" + roomImageMap.get("fr_room_image"));
+			File destDir = new File(ROOM_IMAGE_REPO + "\\" + roomDTO.getFr_no());
 			
 			destDir.mkdirs();
 			FileUtils.moveFileToDirectory(srcFile, destDir, true);
 		}
 
-		mav = new ModelAndView("redirect:/addRoomInfo.do");
+		mav = new ModelAndView("redirect:/goRoomListPage.do?fr_no=" + roomDTO.getFr_no());
 	
 		return mav;
 	}
 	
 	//-----------------------------------------------------------------------------------------------------------
-	// 룸정보 이미지 첨부 메서드
+	// 룸정보 파일업로드
 	//-----------------------------------------------------------------------------------------------------------
-	private Map<String, String> uploadRoomImage(HttpServletRequest request, HttpServletResponse response) 
+	private Map<String, String> uploadRoomInfo(HttpServletRequest request, HttpServletResponse response) 
 		throws ServletException, IOException {
 		
 		Map<String, String> roomImageMap = new HashMap<String, String>();
 		String encoding	=	"utf-8";
 		
 		// 업로드할 파일의 경로를 지정한다.
-		File				currentDirPath		= new File(FREEBOARD_IMAGE_REPO);
+		File				currentDirPath		= new File(ROOM_IMAGE_REPO);
 		
 		DiskFileItemFactory	factory				= new DiskFileItemFactory();
 		
@@ -161,7 +160,7 @@ public class AdminControllerImpl implements AdminController {
 		
 		try {
 			// request객체에서 매개 변수를 List로 가져온다.
-			List items = uploadRoomImage.parseRequest(request);
+			List<FileItem> items = uploadRoomImage.parseRequest(request);
 			
 			for(int i = 0; i < items.size(); i++) {
 				//	파일 업로드 창에서 업로드된 항목들을 하나씩 가져와서 작업을 한다.

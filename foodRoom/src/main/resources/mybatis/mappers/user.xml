@@ -15,8 +15,15 @@
 		<result property="fr_date"		column="fr_date"/>
 	</resultMap>
 	
+	<!-- 아이디 중복검사 -->
+	<select id="checkId" parameterType="com.dining.dto.UserDTO" resultType="int">	
+		SELECT COUNT(*)
+		FROM 	fr_user
+		WHERE 	fr_id = #{fr_id} 
+	</select>
+	
 	<!-- 회원 가입 -->
-	<insert id="addUser" parameterType="com.dining.dto.UserDTO">		
+	<insert id="signUp" parameterType="com.dining.dto.UserDTO">		
 		INSERT INTO fr_user (fr_id, fr_pwd, fr_name, fr_p_number, fr_email, fr_class)
 		VALUES (#{fr_id}, #{fr_pwd}, #{fr_name}, #{fr_p_number}, #{fr_email}, #{fr_class})		
 	</insert>
@@ -26,31 +33,36 @@
 		SELECT 	* 
 		FROM	fr_user
 		WHERE	fr_id = #{fr_id} AND fr_pwd = #{fr_pwd} 
-	</select>
+	</select>	
 	
 	<!-- 아이디 찾기 -->
 	<select id="findId" parameterType="com.dining.dto.UserDTO" resultType="com.dining.dto.UserDTO">
-		SELECT fr_idFROM fr_userWHERE fr_name = #{fr_name}AND fr_email = #{fr_email}
-	</select>
-
-	<!-- 아이디 중복검사 -->
-	<select id="checkId" parameterType="com.dining.dto.UserDTO" resultType="com.dining.dto.UserDTO">	
-		SELECT COUNT(*)FROM fr_userWHERE fr_id = #{fr_id} 
+		SELECT 	fr_id
+		FROM 	fr_user
+		WHERE 	fr_name = #{fr_name}
+		AND 	fr_email = #{fr_email}
 	</select>
 
 	<!-- 비밀번호 찾기 -->
 	<select id="findPwd" parameterType="com.dining.dto.UserDTO" resultType="com.dining.dto.UserDTO">
-		SELECT fr_pwdFROM fr_userWHERE fr_id = #{fr_id}AND fr_email = #{fr_email} 
+		SELECT	fr_pwd
+		FROM	fr_user
+		WHERE	fr_id = #{fr_id}
+		AND		fr_email = #{fr_email} 
 	</select>
 
-	<!-- 마이페이지 -->
+	<!-- 마이페이지 이거 왜 있음-->
 	<select id="myPageForm" parameterType="com.dining.dto.UserDTO" resultType="com.dining.dto.UserDTO">
-		[SELECT *FROM fr_userWHERE fr_id = #{fr_id} 
+		SELECT	*
+		FROM 	fr_user
+		WHERE 	fr_id = #{fr_id} 
 	</select>
 
 	<!-- 마이페이지 변경하기 -->
-	<update id="myPageUpdateGo" parameterType="com.dining.dto.UserDTO">
-		UPDATE fr_userSET fr_pwd = #{fr_pwd},fr_name = #{fr_name},fr_p_number = #{fr_p_number},fr_email = #{fr_email}WHERE fr_id = #{fr_id}	
+	<update id="updateMyPage" parameterType="com.dining.dto.UserDTO">
+		UPDATE	fr_user
+		SET		fr_pwd = #{fr_pwd}, fr_name = #{fr_name}, fr_p_number = #{fr_p_number}, fr_email = #{fr_email}
+		WHERE 	fr_id = #{fr_id}	
 	</update>
 	
 </mapper>

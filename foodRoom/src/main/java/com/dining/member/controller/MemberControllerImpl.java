@@ -55,7 +55,7 @@ public class MemberControllerImpl implements MemberController {
 	@RequestMapping(value="/goMemberRoomListPage.do", method=RequestMethod.GET)
 	private ModelAndView RoomList(@RequestParam("fr_no") int fr_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		List<RoomDTO> mRoomList = memberDAO.mRoomList(fr_no);	// 승인 요청 List로 보여주기	
+		List<RoomDTO> mRoomList = memberDAO.mRoomList(fr_no);	
 		 
 		ModelAndView mav = new ModelAndView("/member/roomListPage");
 		mav.addObject("mRoomList", mRoomList);

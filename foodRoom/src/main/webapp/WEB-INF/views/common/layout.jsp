@@ -8,8 +8,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title><tiles:insertAttribute name="title"/></title>
-	<link href="${contextPath}/css/fr.css" rel="stylesheet">
-	
+	<link href="${contextPath}/css/foodroom.css" rel="stylesheet">
 </head>
 <body>																																																																																									
 	<div id="container">

@@ -14,10 +14,12 @@
 <body>
 <div class="">
 	
-	<div><a href="${contextPath}/addRoomInfo.do?fr_no=${room_no}" 
+	<div>룸 목록</div>
+	
+	<div><a href="${contextPath}/goAddRoomInfoPage.do?fr_no=${fr_no}" 
 					   class=""><button type="button">룸 추가</button></a></div>
 		
-	<div><span class="">룸 목록</span>	
+	<div>
 		<c:forEach var="roomList" items="${roomList}" varStatus="status">
 			<c:if test="${status.index % 2 == 0}">
 				<div class="lookRoomView1">

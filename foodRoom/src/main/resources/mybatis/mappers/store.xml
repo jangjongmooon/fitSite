@@ -67,4 +67,18 @@
 		ORDER BY fr_no DESC 
 	</select>
 	
+	<!-- 전체 업체목록 -->
+	<select id="allStoreList" resultMap="storeResult">
+		SELECT	*
+		FROM	fr_store
+		ORDER BY fr_no DESC 
+	</select>
+	
+	<!-- 검색 업체목록 -->
+	<select id="findStoreList" parameterType="String" resultMap="storeResult">
+		SELECT	*
+		FROM	fr_store
+		WHERE	fr_address = #{fr_address}
+		ORDER BY fr_no DESC 
+	</select>	
 </mapper>
