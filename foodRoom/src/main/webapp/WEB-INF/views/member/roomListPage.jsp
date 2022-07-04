@@ -15,13 +15,23 @@
 		<link href="${contextPath}/css/ezen.css" rel="stylesheet">    		
 </head>
 <script>
+var fr_no = "<c:out value='${fr_no}'/>";
+
 $(function() {
 	//오늘 날짜를 출력
 	$("#today").text(new Date().toLocaleDateString());
 	
-	// 강의 시작일자
+	// 예약 원하는 일자
 	$("#dd").datepicker({
-
+		
+		onSelect: function(date)	 {
+			alert(date)
+			alert(fr_no)
+			var fr_reservation_date = date
+			alert(fr_reservation_date)
+			location.href="${contextPath}/goMemberRoomListPage.do?fr_no=" + fr_no + "&fr_reservation_date=" + fr_reservation_date
+		}
+		
 	});
 
 });
