@@ -14,14 +14,13 @@
 <body>
 <div class="">
 
-	<form id="" name="" method="post">
-		<select name="" id="">
-			<option value="fr_store_N" selected>업체명</option>
+	<form id="" name="" method="post" action="${contextPath}/findStoreList.do">
+		<select name="selectChk" id="">
+			<option value="fr_store_name" selected>업체명</option>
 			<option value="fr_address">업체주소</option>
 		</select>
-		<input class="" type="text" name="" maxlength=100/>
-		<button type="button" id="" >검색</button>
-		
+		<input class="" type="text" name="selectText" maxlength=100/>
+		<button type="submit" id="" >검색</button>	
 	</form>
 
      <!-- 업체등록 승인요청란 -->
@@ -34,7 +33,7 @@
 			<th><b>업체주소</b></th>
 			<th><b>업체연락처</b></th>
 			<th><b>업체주메뉴</b></th>
-			<th><b>룸정보 추가</b></th>
+			<th><b>룸정보 </b></th>
 		</tr>
 		<c:forEach var="approveOk" items="${approveOk}">
 			<tr>

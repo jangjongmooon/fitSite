@@ -33,7 +33,14 @@
 		FROM	fr_room_info
 		WHERE	fr_no = #{fr_no}
 	</select>
-		
+	
+	<select id="selectRoomList" resultMap="memResult" parameterType="java.util.HashMap">
+		SELECT	*
+		FROM	fr_room_info
+		WHERE	fr_no = #{fr_no}
+		AND		fr_room_person_no >= #{personNo} 
+	</select>
+	
 </mapper>
 
 

@@ -32,7 +32,7 @@
 				<td>${approve.fr_address}</td>
 				<td>${approve.fr_store_p_number}</td>
 				<td>${approve.fr_menu}</td>		
-				<td><a href="${contextPath}/approveFoodRoom.do?fr_no=${approve.fr_no}" 
+				<td><a href="${contextPath}/approveFoodRoom.do?fr_id=${approve.fr_id}" 
 					   onclick="return confirm('[${approve.fr_store_name}] 업체를 승인 하시겠습니까?');" class="">승인</a></td>
 			</tr>
 		</c:forEach>

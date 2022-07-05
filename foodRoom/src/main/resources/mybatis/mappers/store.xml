@@ -48,18 +48,18 @@
 	<update id="approveFoodRoom" parameterType="com.dining.dto.StoreDTO">
 		UPDATE fr_store
 		SET    fr_store_ox = 'o' 
-	    WHERE  fr_no       = #{fr_no}    
+	    WHERE  fr_id       = #{fr_id}    
 	</update>
 	
 	<!-- 업체 승인시 오너 fr_class를 12로 변경 -->
-	<update id="changeOwnerClass" parameterType="com.dining.dto.UserDTO">
+	<update id="changeOwnerClass" parameterType="com.dining.dto.StoreDTO">
 		UPDATE	fr_user
 		SET		fr_class = '12'
 		WHERE	fr_class = '02'
 		AND		fr_id = #{fr_id}
 	</update>
 
-	<!-- 승인업체 목록 -->
+	<!-- 승인업체 목록 (관리자, 고객 사용) -->
 	<select id="lookApproveFoodRoomList" parameterType="com.dining.dto.StoreDTO" resultMap="storeResult">
 		SELECT	*
 		FROM	fr_store
@@ -67,6 +67,29 @@
 		ORDER BY fr_no DESC 
 	</select>
 	
+	<!-- 업체명 검색 -->
+	<select id="findStoreOk" parameterType="String" resultMap="storeResult">
+		SELECT	*
+		FROM	fr_store
+		WHERE	fr_store_name LIKE CONCAT('%',#{selectText},'%')
+		AND 	fr_store_ox = 'o' 
+	</select>
+
+	<!-- 업체주소 검색 -->
+	<select id="findAddressOk" parameterType="String" resultMap="storeResult">
+		SELECT	*
+		FROM	fr_store
+		WHERE	fr_address LIKE CONCAT('%',#{selectText},'%')
+		AND 	fr_store_ox = 'o' 
+	</select>
+
+	<!-- 업체번호 매칭(아이디) / 업체 사장이 예약에 대한 룸정보 확인 시 사용 -->
+	<select id="findFr_no" resultType="int" parameterType="String">
+		SELECT	fr_no
+		FROM	fr_store
+		WHERE	fr_id = #{fr_id} 
+	</select>
+
 	<!-- 전체 업체목록 -->
 	<select id="allStoreList" resultMap="storeResult">
 		SELECT	*
@@ -74,11 +97,28 @@
 		ORDER BY fr_no DESC 
 	</select>
 	
-	<!-- 검색 업체목록 -->
-	<select id="findStoreList" parameterType="String" resultMap="storeResult">
+	<!-- 고객이 검색 시 사용 -->
+	
+	<!-- 지역별 검색 업체목록 -->
+	<select id="findStoreList" parameterType="com.dining.dto.SelectDTO" resultMap="storeResult">
 		SELECT	*
 		FROM	fr_store
-		WHERE	fr_address = #{fr_address}
-		ORDER BY fr_no DESC 
-	</select>	
+		WHERE	fr_address LIKE CONCAT('%',#{findBigStore},'%')
+		AND		fr_address LIKE CONCAT('%',#{findSmallStore},'%')
+	</select>
+	
+	<!-- 지역검색 이후 메뉴 및 인원으로 업체 검색 -->
+	<select id="detailFindStoreList" parameterType="com.dining.dto.SelectDTO" resultMap="storeResult">
+		SELECT	st.fr_store_name, st.fr_address, st.fr_store_p_number, st.fr_menu, st.fr_no
+		FROM	fr_store AS st
+		JOIN	fr_room_info AS ro
+		ON 		st.fr_no = ro.fr_no
+		WHERE	(st.fr_address LIKE CONCAT('%',#{findBigStore},'%')
+				AND st.fr_address LIKE CONCAT('%',#{findSmallStore},'%')
+				AND ro.fr_room_person_no >= #{personNo})
+		AND 	st.fr_menu 
+		in		(#{menu1}, #{menu2}, #{menu3}, #{menu4}, #{menu5})
+		GROUP BY st.fr_no 
+	</select>
+	
 </mapper>

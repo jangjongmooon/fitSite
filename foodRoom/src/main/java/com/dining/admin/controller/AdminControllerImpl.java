@@ -2,6 +2,7 @@ package com.dining.admin.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class AdminControllerImpl implements AdminController {
 	private static String ROOM_IMAGE_REPO = "C:\\data\\room_image";
 	
 	//-----------------------------------------------------------------------------------------------------------
-	// 미승인된 업체  List
+	// 미승인된 업체들 승인하는 페이지 가기
 	//-----------------------------------------------------------------------------------------------------------
 	@RequestMapping(value="/goApproveFoodRoomPage.do", method=RequestMethod.GET)
 	private ModelAndView unapproveFoodRoomList(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -47,12 +48,13 @@ public class AdminControllerImpl implements AdminController {
 	}
 		
 	//-----------------------------------------------------------------------------------------------------------
-	// 승인하기 
+	// 미등록 업체 승인하기, 업체 승인시 fr_class를 12로 변경
 	//-----------------------------------------------------------------------------------------------------------
 	@RequestMapping(value="/approveFoodRoom.do", method=RequestMethod.GET)
 	public ModelAndView approveFoodRoom(@ModelAttribute("storeDTO") StoreDTO storeDTO, HttpServletRequest request, HttpServletResponse response) throws Exception {
 	   
 	   adminDAO.approveFoodRoom(storeDTO);
+	   adminDAO.changeOwnerClass(storeDTO);
 	   ModelAndView mav = new ModelAndView("redirect:/goApproveFoodRoomPage.do");
 		   
 	   return mav;
@@ -62,7 +64,7 @@ public class AdminControllerImpl implements AdminController {
 	// 승인업체 관리페이지 가기
 	//-----------------------------------------------------------------------------------------------------------
 	@RequestMapping(value="/goManageFoodRoomPage.do", method=RequestMethod.GET)
-	private ModelAndView manageFoodRoom(@ModelAttribute("storeDTO") StoreDTO storeDTO, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView manageFoodRoom(@ModelAttribute("storeDTO") StoreDTO storeDTO, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		List<StoreDTO> lookApproveFoodRoomList = adminDAO.lookApproveFoodRoomList(storeDTO);	// 승인 요청 List로 보여주기
 		
@@ -73,6 +75,31 @@ public class AdminControllerImpl implements AdminController {
 		return mav;
 	}
 	
+	//-----------------------------------------------------------------------------------------------------------
+	// 승인업체 검색 (업체검색 [업체명], 업체검색 [주소])
+	//-----------------------------------------------------------------------------------------------------------
+	@RequestMapping(value="/findStoreList.do", method=RequestMethod.POST)
+	public ModelAndView findStoreList(@RequestParam("selectChk") String selectChk, @RequestParam("selectText") String selectText, 
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		System.out.println("셀렉박스값" + selectChk);
+		System.out.println("넘긴값" + selectText);
+		List<StoreDTO> approveOkSelect = new ArrayList<> ();
+
+		if(selectChk.equals("fr_store_name")) {
+			approveOkSelect = adminDAO.findStoreOk(selectText);
+			System.out.println("fr_store_name => "+selectText);
+		}
+		else {
+			approveOkSelect = adminDAO.findAddressOk(selectText);
+			System.out.println("fr_address => "+selectText);
+		}
+		
+		ModelAndView mav = new ModelAndView("/admin/manageFoodRoom");
+		mav.addObject("approveOk", approveOkSelect);
+		return mav;
+	}
+		
 	//-----------------------------------------------------------------------------------------------------------
 	// 룸목록 페이지 가기
 	//-----------------------------------------------------------------------------------------------------------

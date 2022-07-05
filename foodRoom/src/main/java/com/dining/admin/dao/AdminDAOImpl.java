@@ -58,6 +58,26 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 	
 	//-----------------------------------------------------------------------------------------------------------
+	// 업체검색 (업체명)
+	//-----------------------------------------------------------------------------------------------------------
+	@Override
+	public List<StoreDTO> findStoreOk(String selectText) throws DataAccessException {
+		List<StoreDTO> approveOkSelectStore = sqlSession.selectList("mapper.store.findStoreOk", selectText);	
+		System.out.println(approveOkSelectStore);
+		return approveOkSelectStore;
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------
+	// 업체검색 (주소)
+	//-----------------------------------------------------------------------------------------------------------
+	@Override
+	public List<StoreDTO> findAddressOk(String selectText) throws DataAccessException {
+		List<StoreDTO> approveOkSelectAddress = sqlSession.selectList("mapper.store.findAddressOk", selectText);	
+		System.out.println(approveOkSelectAddress);
+		return approveOkSelectAddress;
+	}
+		
+	//-----------------------------------------------------------------------------------------------------------
 	// 룸 목록
 	//-----------------------------------------------------------------------------------------------------------	
 	@Override
