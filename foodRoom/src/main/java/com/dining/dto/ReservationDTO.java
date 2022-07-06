@@ -7,16 +7,18 @@ public class ReservationDTO {
 
 	private int fr_room_no;						// 룸 번호
 	private String fr_name;						// 이름(예약자)
+	private String fr_p_number;					// 연락처(예약자)
 	private String fr_reservation_person_no;	// 예약인원
 	private String fr_reservation_date;			// 예약일자
 	private String fr_reservation_ox;			// 예약여부
 	
 	public ReservationDTO() {}
 	
-	public ReservationDTO(int fr_room_no, String fr_name, String fr_reservation_person_no,
+	public ReservationDTO(int fr_room_no, String fr_name, String fr_p_number, String fr_reservation_person_no,
 							String fr_reservation_date, String fr_reservation_ox) {
 		this.fr_room_no					= fr_room_no;
 		this.fr_name					= fr_name;
+		this.fr_p_number				= fr_p_number;
 		this.fr_reservation_person_no	= fr_reservation_person_no;
 		this.fr_reservation_date		= fr_reservation_date;
 		this.fr_reservation_ox			= fr_reservation_ox;
@@ -36,6 +38,14 @@ public class ReservationDTO {
 
 	public void setFr_name(String fr_name) {
 		this.fr_name = fr_name;
+	}
+
+	public String getFr_p_number() {
+		return fr_p_number;
+	}
+
+	public void setFr_p_number(String fr_p_number) {
+		this.fr_p_number = fr_p_number;
 	}
 
 	public String getFr_reservation_person_no() {
@@ -64,9 +74,10 @@ public class ReservationDTO {
 
 	@Override
 	public String toString() {
-		return "ReservationVO [fr_room_no=" + fr_room_no + ", fr_name=" + fr_name + ", fr_reservation_person_no="
-				+ fr_reservation_person_no + ", fr_reservation_date=" + fr_reservation_date + ", fr_reservation_ox="
-				+ fr_reservation_ox + "]";
+		return "ReservationVO [fr_room_no=" + fr_room_no + ", fr_name=" + fr_name + ", fr_p_number=" + fr_p_number
+				+ ", fr_reservation_person_no=" + fr_reservation_person_no + ", fr_reservation_date="
+				+ fr_reservation_date + ", fr_reservation_ox=" + fr_reservation_ox + "]";
 	}
+
 		
 }

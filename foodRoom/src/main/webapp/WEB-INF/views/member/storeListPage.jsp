@@ -68,27 +68,27 @@
 	</div>
 
 	<c:if test="${findBigStore != null}">
-	<div>
-		<form method="post" class="" name="searchMenuInfo">	
-			<input type="checkbox" id="chkAll" /><label for="chkAll">All</label>
-			<input type="hidden" name="findBigStore" value="${findBigStore}" />
-			<input type="hidden" name="findSmallStore" value="${findSmallStore}" />
-			<div class="target01">
-				<input type="checkbox" name="menu1" id="fr_menu" value="한식"/>한식
-				<input type="checkbox" name="menu2" id="fr_menu" value="중식"/>중식
-				<input type="checkbox" name="menu3" id="fr_menu" value="일식"/>일식
-				<input type="checkbox" name="menu4" id="fr_menu" value="양식"/>양식
-				<input type="checkbox" name="menu5" id="fr_menu" value="기타"/>기타
-			</div>
-			예약가능인원 : <input type="number" min="1" max="20" name="personNo" value="1">
-			<input type="button" id="searchInfo" value="검색">		
-		</form>
-	</div>
+		<div>
+			<form method="post" class="" name="searchMenuInfo">	
+				<input type="checkbox" id="chkAll" /><label for="chkAll">All</label>
+				<input type="hidden" name="findBigStore" value="${findBigStore}" />
+				<input type="hidden" name="findSmallStore" value="${findSmallStore}" />
+				<div class="target01">
+					<input type="checkbox" name="menu1" id="fr_menu" value="한식"/>한식
+					<input type="checkbox" name="menu2" id="fr_menu" value="중식"/>중식
+					<input type="checkbox" name="menu3" id="fr_menu" value="일식"/>일식
+					<input type="checkbox" name="menu4" id="fr_menu" value="양식"/>양식
+					<input type="checkbox" name="menu5" id="fr_menu" value="기타"/>기타
+				</div>
+				예약가능인원 : <input type="number" min="1" max="20" name="personNo" value="1">
+				<input type="button" id="searchInfo" value="검색">		
+			</form>
+		</div>
 	</c:if>
     <!-- 업체목록 -->
     <div class="storeList">		
 		<span class="">업체목록</span>		
-		      <table class="">           		
+		<table class="">           		
 			<tr>
 				<th><b>업체주소</b></th>
 				<th><b>업체명</b></th>

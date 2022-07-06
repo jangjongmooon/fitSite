@@ -15,23 +15,23 @@
 		<link href="${contextPath}/css/ezen.css" rel="stylesheet">    		
 </head>
 <script>
-var fr_no = "<c:out value='${fr_no}'/>";
+var fr_no = "<c:out value='${fr_no}'/>";		// 업체 번호 가져오기
+var personNo = "<c:out value='${personNo}'/>";  // 회원이 선택한 인원 수 가져오기
 
 $(function() {
-	//오늘 날짜를 출력
-	$("#today").text(new Date().toLocaleDateString());
 	
 	// 예약 원하는 일자
-	$("#dd").datepicker({
-		
+	$("#SelectDate").datepicker({
+		defaultDate: new Date(),
+		minDate: 0, // 데이터 피커에서 오늘이전 선택 불가
 		onSelect: function(date)	 {
-			alert(date)
-			alert(fr_no)
+			//alert(date)
+			//alert(fr_no)
+			//alert(personNo)
 			var fr_reservation_date = date
-			alert(fr_reservation_date)
-			location.href="${contextPath}/goMemberRoomListPage.do?fr_no=" + fr_no + "&fr_reservation_date=" + fr_reservation_date
+			//alert(fr_reservation_date)
+			location.href="${contextPath}/selectDayStoreRoomListForm.do?fr_no=" + fr_no + "&personNo=" + personNo + "&fr_reservation_date=" + fr_reservation_date
 		}
-		
 	});
 
 });
@@ -63,7 +63,7 @@ $(function() {
 });
 </script>
 <body>
-<div class="" style="width=100%; height:100%;">
+<div class="" style="width=100%; height:100%; overflow:scroll;">
 
 	<div>룸 목록</div>
 
@@ -72,7 +72,7 @@ $(function() {
 			<table id="">
 				<tr>
 					<td>예약날짜 : </td>
-		      		<td><input type="text" id="dd" class="" name="" value="" placeholder="날짜선택" readonly/></td>
+		      		<td><input type="text" id="SelectDate" value="" placeholder="날짜선택" readonly/></td>
 				</tr>
 			</table>
 		</form>
@@ -84,35 +84,50 @@ $(function() {
 		<div class="reservationPossible">
 			<span>예약 가능</span><hr/>
 			<!-- for문 조건:예약가능한 -->
-			<div>
-				<img id="loomImage" usemap="" width="120" height="120" src="" style="float:left;"/>
+			<c:forEach var="selectStoreRoomList" items="${selectStoreRoomList}" varStatus="status">
+			<div style="min-height:120px;">
+				<c:if test="${selectStoreRoomList.fr_room_image != null}">
+					<img id="loomImage" usemap="" src="${contextPath}/roomImg/${selectStoreRoomList.fr_no}/${selectStoreRoomList.fr_room_image}" width="120" height="120" style="float:left;"/>
+				</c:if>
+				<c:if test="${selectStoreRoomList.fr_room_image == null}">
+					<img id="loomImage" usemap="" src="${contextPath}/roomImg/imsi/logo.png" width="300" height="100" style="float:left;"/>
+				</c:if>
 				<span class="">룸이름 : </span>
-				<span class=""></span><br/>							
+				<span class="">${selectStoreRoomList.fr_room_name}</span><br/>							
 				<span class="">룸정원 : </span>
-				<span class=""></span>
-				<form>
-					예약인원<input type="number"  name="fr_room_person_no" min="1" max=""> <!-- max는 룸 정원인원 -->
-					<input type="hidden" name="fr_room_no" value="">
-					<input type="hidden" name="fr_reservation_date" id="fr_reservation_date">
-					<button type="button" id="">예약하기</button>
-					
+				<span class="">${selectStoreRoomList.fr_room_person_no}</span>
+				<form action="${contextPath}/onlineReservationForm.do" method="POST">
+					예약인원<input type="number"  name="fr_reservation_person_no" min="1" max="${selectStoreRoomList.fr_room_person_no}"> <!-- 예약인원 / max는 룸 정원인원 -->
+					<input type="hidden" name="fr_room_no" value="${selectStoreRoomList.fr_room_no}">			<!-- 룸 번호 -->
+					<input type="hidden" name="fr_reservation_date" id="fr_reservation_date" value="${date}">	<!-- 예약일자 -->
+					<button type="submit" id="reservationBtn">예약하기</button>				
 				</form>
-			</div>		
+			</div>
+			<br/>
+			<br/>	
+			</c:forEach>			
 		</div>
 					
 		<div class="reservatioinImpossible">
 			<span>예약 불가</span><hr/>
 			<!-- for문 조건:예약불가능한 -->
-			<div>
-				<img id="loomImage" usemap="" width="120" height="120" src="" style="float:left;"/>
-				<span class="">룸이름 : </span>
-				<span class=""></span><br/>	
-				<span class="">룸정원 : </span>
-				<span class=""></span>
-				<div>
-					<button type="button" id="">예약대기</button>
-				</div>	
-			</div>
+			<c:forEach var="completionRoomList" items="${completionRoomList}" varStatus="status">
+				<div style="min-height:120px;"> 
+				    <c:if test="${completionRoomList.fr_room_image != null}">
+                  		<img id="loomImage" usemap="" width="300" height="120" src="${contextPath}/roomImg/${completionRoomList.fr_no}/${completionRoomList.fr_room_image}" style="float:left;"/>
+               		</c:if>
+               		<c:if test="${completionRoomList.fr_room_image == null}">
+                 		<img id="loomImage" usemap="" width="300" height="120" src="${contextPath}/roomImg/imsi/logo.png" style="float:left;"/>
+               		</c:if>
+					<span class="">룸이름 : </span>
+					<span class="">${completionRoomList.fr_room_name}</span><br/>	
+					<span class="">룸정원 : </span>
+					<span class="">${completionRoomList.fr_room_person_no}</span>
+					<div>
+						<button type="button" id="">예약대기</button>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
 				
 	</div>	

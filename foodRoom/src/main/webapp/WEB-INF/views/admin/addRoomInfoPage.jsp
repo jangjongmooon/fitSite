@@ -15,7 +15,7 @@
 		if(input.files && input.files[0]) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
-				$('').attr('src', e.target.result);
+				$('#addd').attr('src', e.target.result);
 			}
 			reader.readAsDataURL(input.files[0]);
 		}
@@ -55,9 +55,9 @@
 						<td class="">
 								<span class="">[미리보기]</span><br/>
 								<div class="">
-									<input id="" type="file" name="fr_imageFile" onchange="readURL(this);" style="display:none;"/>
+									<input id="asd" type="file" name="fr_imageFile" onchange="readURL(this);" style="display:none;"/>
 								</div>	
-								<img id=""/><br/>
+								<img id="addd" width="120" height="120"/>
 								<label for="" class="">▶파일 첨부</label>
 						</td>
 					</tr>

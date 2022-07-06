@@ -28,7 +28,7 @@
 
 <div id="loginField">
 	<form method="post" name="loginFieldForm" id="loginForm" action="${contextPath}/login.do">
-		<table id="loginTable">
+		<table class="loginTable">
 			<tr>
 				<th><span>로그인</span></th>
 			</tr>
@@ -44,7 +44,7 @@
 				<td><button type="submit" id="loginBtn">로그인</button></td>
 			</tr>
 			<tr>
-				<td><a href="${contextPath}/goFindIdPwdForm.do" onclick="window.open(this.href,'_blank','width=500,height=500, scrollbars=no, resizable=no');return false;" class="">아이디/비밀번호 찾기</a></td>
+				<td><a href="${contextPath}/goFindIdPwdPage.do" onclick="window.open(this.href,'_blank','width=500,height=500, scrollbars=no, resizable=no');return false;" class="">아이디/비밀번호 찾기</a></td>
 				<td><a href="${contextPath}/signUpPage.do" class="">회원가입</a></td>
 			</tr>
 		</table>

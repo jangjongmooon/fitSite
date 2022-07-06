@@ -1,5 +1,8 @@
 package com.dining.owner.controller;
 
+import java.util.HashMap;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -14,9 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.dining.dto.StoreDTO;
-import com.dining.dto.UserDTO;
 import com.dining.owner.dao.OwnerDAO;
+import com.dining.dto.StoreDTO;
+import com.dining.dto.ReservationDTO;
+import com.dining.dto.RoomDTO;
+import com.dining.dto.SetRevDTO;
 
 @Controller("OwnerController")
 public class OwnerControllerImpl implements OwnerController {
@@ -28,7 +33,7 @@ public class OwnerControllerImpl implements OwnerController {
     // 업체정보 등록페이지 가기 
     //-----------------------------------------------------------------------------------------------------------
 	@RequestMapping(value="/goRegiFoodRoomPage.do", method=RequestMethod.GET)
-		public ModelAndView regiFoodRoomPage(RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception { 	   
+	public ModelAndView regiFoodRoomPage(RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception { 	   
 	   
 		// 세션 가져오기
 		HttpSession session = request.getSession();
@@ -92,25 +97,174 @@ public class OwnerControllerImpl implements OwnerController {
 	}
    
     //-----------------------------------------------------------------------------------------------------------
-    // 업체 예약관리 달력 페이지
+    // 업체 예약관리 달력 페이지 (달력 불러올 때 예약 리스트 가져오기)
     //-----------------------------------------------------------------------------------------------------------
     @RequestMapping(value="/reservation.do", method=RequestMethod.GET)
-    private ModelAndView reservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView reservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
       
-        ModelAndView mav = new ModelAndView();
+    	HttpSession session = request.getSession();
+		String fr_id = (String)session.getAttribute("fr_id");
+		
+		int fr_no = ownerDAO.findFr_no(fr_id);
+    	
+    	List<SetRevDTO> SetRevList = ownerDAO.SetRevList(fr_no);
+    	ModelAndView mav = new ModelAndView();
         mav.setViewName("/owner/reservation");
+        mav.addObject("SetRevList", SetRevList);
         return mav;
     }
    
     //-----------------------------------------------------------------------------------------------------------
-    // 업체 예약정보 수정 페이지
+  	// 달력 불러올 때 예약 리스트 가져오기
+  	//-----------------------------------------------------------------------------------------------------------
+  	@ResponseBody
+  	@RequestMapping(value="/revAllList.do", method=RequestMethod.POST)
+  	public List<ReservationDTO> revAllList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  		
+  		// System.out.println("달력 페이지 ajax...");
+  		HttpSession session = request.getSession();
+  		String fr_id = (String)session.getAttribute("fr_id");
+  		
+  		int fr_no = ownerDAO.findFr_no(fr_id);
+  		// System.out.println("ajax 찾아온 fr_no ==> " + fr_no);
+  		List<ReservationDTO> revAllList = ownerDAO.revAllList(fr_no);
+  		// System.out.println("달력 예약 리스트 ==> " + revAllList);
+  		return revAllList;
+  	}
+  	
+    //-----------------------------------------------------------------------------------------------------------
+    // 예약 관리 업체별 룸 정보 뿌리기
     //-----------------------------------------------------------------------------------------------------------
     @RequestMapping(value="/reservationForm.do", method=RequestMethod.GET)
-    private ModelAndView reservationForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
-      
+    public ModelAndView reservationForm(@RequestParam("fr_reservation_date") String fr_reservation_date, 
+    		HttpServletRequest request, HttpServletResponse response) throws Exception {
+ 
+		HttpSession session = request.getSession();
+		String fr_id = (String)session.getAttribute("fr_id");
+		
+		System.out.println("fr_reservation_date ==>" + fr_reservation_date);		
+		int fr_no = ownerDAO.findFr_no(fr_id);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("fr_reservation_date", fr_reservation_date);
+		map.put("fr_no", fr_no);
+
+		//예약 완료된 룸 리스트
+		List<RoomDTO> revRoomList = ownerDAO.revRoomList(map);
+		
+		//예약 가능한 룸 리스트
+		List<RoomDTO> frRoomNoList = ownerDAO.frRoomNoList(map);
+		
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/owner/reservationForm");
+        
+        mav.addObject("revRoomList", revRoomList);
+		mav.addObject("frRoomNoList", frRoomNoList);
+		mav.addObject("fr_reservation_date", fr_reservation_date);
+		
         return mav;
     }
+    
+	//-----------------------------------------------------------------------------------------------------------
+	// 오프라인 예약 완료 처리
+	//-----------------------------------------------------------------------------------------------------------
+	@RequestMapping(value="/ownerRevOk.do", method=RequestMethod.GET)
+	public ModelAndView ownerRevOk(@RequestParam("fr_room_no") int fr_room_no, @RequestParam("fr_reservation_date") String fr_reservation_date,
+		   HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("fr_reservation_date", fr_reservation_date);
+		map.put("fr_room_no", fr_room_no);
+		
+		ownerDAO.ownerRevOk(map);
+		
+		ModelAndView mav = new ModelAndView("redirect:/reservationForm.do");
+		mav.addObject("fr_reservation_date", fr_reservation_date);
+		return mav;
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------
+	// 예약 취소 처리 ( DEL )
+	//-----------------------------------------------------------------------------------------------------------
+	@RequestMapping(value="/cancleRev.do", method=RequestMethod.GET)
+	public ModelAndView cancleRev(@RequestParam("fr_room_no") int fr_room_no, @RequestParam("fr_reservation_date") String fr_reservation_date,
+		   HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("fr_reservation_date", fr_reservation_date);
+		map.put("fr_room_no", fr_room_no);
+		
+		ownerDAO.cancleRev(map);
+		
+		ModelAndView mav = new ModelAndView("redirect:/reservationForm.do");
+		mav.addObject("fr_reservation_date", fr_reservation_date);
+		return mav;
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------
+	// 예약 현황 보기
+	//-----------------------------------------------------------------------------------------------------------
+	@RequestMapping(value="/revUserList.do", method=RequestMethod.POST)
+	public List<ReservationDTO> revUserList(@RequestParam("fr_room_no") int fr_room_no, @RequestParam("fr_reservation_date") String fr_reservation_date,
+		   HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("fr_reservation_date", fr_reservation_date);
+		map.put("fr_room_no", fr_room_no);
+		
+		//예약 정보(회원 리스트)
+		List<ReservationDTO> revUserList = ownerDAO.revUserList(map); 
+		System.out.println("가져온 리스트" + revUserList);
+		return revUserList;
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------
+	// 업체 휴무일 등록
+	//-----------------------------------------------------------------------------------------------------------
+	@RequestMapping(value="/restDay.do", method=RequestMethod.GET)
+	public ModelAndView restDay(@RequestParam("fr_reservation_date") String fr_reservation_date,
+		HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		String fr_id = (String)session.getAttribute("fr_id");
+		
+		System.out.println("fr_reservation_date ==>" + fr_reservation_date);		
+		int fr_no = ownerDAO.findFr_no(fr_id);
+		
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("fr_reservation_date", fr_reservation_date);
+		map.put("fr_no", fr_no);
+		
+		ownerDAO.restDay(map);
+		
+		ModelAndView mav = new ModelAndView("redirect:/reservationForm.do");
+		mav.addObject("fr_reservation_date", fr_reservation_date);
+		return mav;
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------
+	// 업체 휴무일 취소
+	//-----------------------------------------------------------------------------------------------------------
+	@RequestMapping(value="/restDeleteDay.do", method=RequestMethod.GET)
+	public ModelAndView restDeleteDay(@RequestParam("fr_reservation_date") String fr_reservation_date,
+		HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		String fr_id = (String)session.getAttribute("fr_id");
+		
+		System.out.println("fr_reservation_date ==>" + fr_reservation_date);		
+		int fr_no = ownerDAO.findFr_no(fr_id);
+		
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("fr_reservation_date", fr_reservation_date);
+		map.put("fr_no", fr_no);
+		
+		ownerDAO.restDeleteDay(map);
+		
+		ModelAndView mav = new ModelAndView("redirect:/reservationForm.do");
+		mav.addObject("fr_reservation_date", fr_reservation_date);
+		return mav;
+	}
+
     
 }

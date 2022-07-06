@@ -97,8 +97,7 @@
 		ORDER BY fr_no DESC 
 	</select>
 	
-	<!-- 고객이 검색 시 사용 -->
-	
+	<!-- 고객이 검색 시 사용 -->	
 	<!-- 지역별 검색 업체목록 -->
 	<select id="findStoreList" parameterType="com.dining.dto.SelectDTO" resultMap="storeResult">
 		SELECT	*

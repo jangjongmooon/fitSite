@@ -16,6 +16,13 @@ var today = new Date();			// 오늘 날짜 데이터를 변수 today로 저장.
 var date = new Date();			// 비교를 하기 위하여 오늘 날짜 데이터를 변수 date로 저장.
 var curTime = today.getFullYear() +"-"+ (today.getMonth() + 1)  +"-"+ today.getDate();		// 현재 정확한 날짜를 불러오되, 비교를 하기 위해 날짜 사이에 '-' 표시로 균일한 조건을 갖추도록 변수 저장.
 
+var arr = new Array();
+<c:forEach items="${SetRevList}" var="SetRevList">
+	arr.push({ 
+		fr_reservation_date: "${SetRevList.fr_reservation_date}"
+	});
+</c:forEach>
+
 //function buildCalendar() 달력을 생성하는 기능 선언
 function buildCalendar() {
 	// 기본 변수 초기화
@@ -82,14 +89,7 @@ function buildCalendar() {
 	    
 	  	cell.innerHTML = i;		// 달력에 표기될 일자의 카운트.
 	  	cell.align = "center"; // 각 셀 정렬 방법.
-
-	 	// 셀 클릭시 수행할 기능에 대하여 설정한다.
-	  	cell.onclick = function() {
-	  		clickedDate = this.getAttribute('id'); // 상기 설정한 각 셀의 정보를 가져온다.
-	  		
-	  		// 선택한 날짜의 예약페이지로 이동
-	  		location.href = "${contextPath}/reservationForm.do?fr_reservation_date=" + clickedDate;
-	  	} // End - cell.onclick = function()
+	  	
 	  	
 		// 카운트 숫자(각 셀의 고유 카운트)가 7로 나누었을 때 1이 남는 경우 일요일로 구분한다. 즉, 각 1번칸, 8번칸, 15번칸 ---- 순.
 	    if (cnt % 7 == 1) {
@@ -106,6 +106,46 @@ function buildCalendar() {
 	    if (todayDate==curTime){
 	    	cell.innerHTML = "<font color=orange class=\"textShadow\">"+i+"</font>";
 	    }
+		
+	  	// cell안에 데이터 입력
+	  	(function(i) {
+	  		// 예약 완료 건수
+	  		var cnt = 0;
+	  		$.ajax({
+	  			type:		"POST",						
+ 				url:		"${contextPath}/revAllList.do",		
+ 				dataType:	"json",						
+ 				async:		false,
+ 				success:	function(data) {
+ 					
+ 					$(data).each(function(c, item) {
+ 						if(data[c].fr_reservation_date == cellDate) {
+ 							cnt++;	
+ 						}
+ 					});
+ 					
+	 				if(cnt > 0) {	  			
+	 			  		cell.innerHTML += "<br/><span>●예약완료 : " + cnt + "</span>";
+	 		  		}
+ 				}
+	  		}); // end $.ajax	
+	  	})(i); //end function(i)
+	  	
+	  	// 휴일 거르는 거
+        for(k = 0; k < arr.length; k++) {
+            if(arr[k].fr_reservation_date == cellDate) {
+               cell.innerHTML += "<br>휴무";
+               cell.style.backgroundColor="pink";
+            }
+           }
+	  	
+		// 셀 클릭시 수행할 기능에 대하여 설정한다.
+	  	cell.onclick = function() {
+	  		clickedDate = this.getAttribute('id'); // 상기 설정한 각 셀의 정보를 가져온다.
+	  		// 선택한 날짜의 예약페이지로 이동
+	  		location.href = "${contextPath}/reservationForm.do?fr_reservation_date=" + clickedDate;
+	  	} // End - cell.onclick = function()
+	  	
 	} // for문 끝
 	
  	// 날짜가 유효한 달력칸이 7칸 미만인 경우 나머지는 빈 셀로 채운다.

@@ -118,7 +118,7 @@ public class UserControllerImpl implements UserController {
 		if(loginInfo == null) { // 로그인 정보가 없을 경우
 			// 다시 로그인 페이지로
 			rAttr.addAttribute("result", "loginFailed");
-			mav = new ModelAndView("redirect:/loginPage.do");
+			mav = new ModelAndView("redirect:/goLoginPage.do");
 			
 		} else { // 로그인 정보가 있는 경우
 			// 입력한 id, pwd 가 등록된 id, pwd와 같을 경우
@@ -147,10 +147,10 @@ public class UserControllerImpl implements UserController {
 	//-----------------------------------------------------------------------------------------------------------
 	// id pwd 찾기 페이지로 가기
 	//-----------------------------------------------------------------------------------------------------------
-	@RequestMapping(value="/goFindIdPwdForm.do", method=RequestMethod.GET)
+	@RequestMapping(value="/goFindIdPwdPage.do", method=RequestMethod.GET)
 	private ModelAndView findIdPwdForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("/user/findIdPwdForm");
+		mav.setViewName("/user/findIdPwdPage");
 		return mav;
 	}
 	

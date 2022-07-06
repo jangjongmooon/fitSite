@@ -10,12 +10,15 @@
 	<title>룸정보 수정하기</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script> 
-	// jQuery를 이용하여 이미지 파일을 첨부할 때 미리보기 기능을 구현한다. 		
+			
 	function readURL(input) {
+		$('#originalImg').hide();
+		$('#previewImg').show();
+		
 		if(input.files && input.files[0]) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
-				$('').attr('src', e.target.result);
+				$('#modImage').attr('src', e.target.result);
 			}
 			reader.readAsDataURL(input.files[0]);
 		}
@@ -23,16 +26,26 @@
 	
 	$(document).ready(function() {
 		
-		   // 기입한 룸정보에 대한 유효성 검사
-		   $("#reviseRoomInfoBtn").on("click", function() {
-		      
-		      
-		      document.reviseRoomInfoForm.action="";
-		      document.reviseRoomInfoForm.submit();   
-		      
-		   });
-		   
+		// 게시글 수정
+		$("#modBtn").on("click", function() {
+			if (confirm("게시글을 수정 하시겠습니까??") == true) {
+				document.freeboard.action = "${contextPah}/freeboard/modPosts.do";
+				document.freeboard.submit();
+			} else {
+				return;
+			}
 		});
+		
+		// 룸정보 삭제
+		$(".deleteRoomInfo").on("click", function() {		
+			if (confirm("게시글을 삭제 하시겠습니까??") == true) {
+				location = "";
+			} else {
+				return;
+			}
+		});		
+		   
+	});
 	</script>
 </head>
 

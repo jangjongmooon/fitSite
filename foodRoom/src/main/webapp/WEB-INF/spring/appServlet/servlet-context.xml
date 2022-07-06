@@ -9,12 +9,21 @@
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	<context:component-scan base-package="com.food.site"/>
+	<context:component-scan base-package="com.dining.dto"/>
+	<context:component-scan base-package="com.dining.user"/>
+	<context:component-scan base-package="com.dining.owner"/>
+	<context:component-scan base-package="com.dining.admin"/>
+	<context:component-scan base-package="com.dining.member"/>
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/resource/**" location="/resource/" />
+	<resources mapping="/css/**" location="/WEB-INF/views/css/" />
+	<resources mapping="/img/**" location="C:\data\room_image" />
+	
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -22,9 +31,6 @@
 		<beans:property name="suffix" value=".jsp" />
 		<beans:property name="order"  value="2" />
 	</beans:bean>
-	
-	<context:component-scan base-package="com.food.site"/>
-	<context:component-scan base-package="com.dining.user"/>
 	
 	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<beans:property name="definitions">

@@ -108,9 +108,11 @@ function pwTest() {
 
 <body>
 	<div id="updateMyPageField">
-		<span>MyPage Update</span>
 		<form method="post" name="updateMyPageForm">
-			<table>
+			<table class="myPageUpdateTable">
+				<tr>
+					<th colspan=2><span>MyPage Update</span></th>
+				</tr>
 				<tr>
 					<td>아이디</td>
 					<td><input type="text" id="fr_id" name="fr_id" value="${fr_id}" readonly/></td>

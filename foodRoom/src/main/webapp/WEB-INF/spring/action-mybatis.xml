@@ -33,10 +33,19 @@
 	</bean>
 
 	<!-- component-scan을 이용하여 해당 패키지를 스캔하게 된다. -->
-	<context:component-scan base-package="com.dining.vo"></context:component-scan>
+	<context:component-scan base-package="com.dining.dto"></context:component-scan>
 	<context:component-scan base-package="com.dining.user"></context:component-scan>
 	<context:component-scan base-package="com.dining.user.controller"></context:component-scan>
 	<context:component-scan base-package="com.dining.user.dao"></context:component-scan>
+	<context:component-scan base-package="com.dining.owner"></context:component-scan>
+	<context:component-scan base-package="com.dining.owner.controller"></context:component-scan>
+	<context:component-scan base-package="com.dining.owner.dao"></context:component-scan>
+	<context:component-scan base-package="com.dining.admin"></context:component-scan>
+	<context:component-scan base-package="com.dining.admin.controller"></context:component-scan>
+	<context:component-scan base-package="com.dining.admin.dao"></context:component-scan>
+	<context:component-scan base-package="com.dining.member"></context:component-scan>
+	<context:component-scan base-package="com.dining.member.controller"></context:component-scan>
+	<context:component-scan base-package="com.dining.member.dao"></context:component-scan>
 	
 </beans>
 

@@ -34,24 +34,24 @@
 					<td class="dropdown">		
 						<span class="userName topMenuBtn">${fr_name}님	&#9660;</span>
 						<div class="infoView">
-							<c:if test="${fr_class == 13}">
+							<c:if test="${fr_class == 13}"> <!-- 일반회원 -->
 								<a href="${contextPath}/goMyPage.do"><input type="button" value="내정보" class=""/></a>
-								<a href=""><input type="button" value="예약내역" class=""/></a>
+								<a href="${contextPath}/myReservationForm.do"><input type="button" value="예약내역" class=""/></a>
 								<a href="${contextPath}/goReservationStore.do"><input type="button" value="예약하기" class=""/></a>
 								<a href="${contextPath}/logout.do" onclick="return confirm('정말 로그아웃 하시겠습니까?');"><input type="button" value="로그아웃" class=""/></a>								
 							</c:if>
-							<c:if test="${fr_class == 12}">
+							<c:if test="${fr_class == 12}"> <!-- 승인된 오너 -->
 								<a href="${contextPath}/goMyPage.do"><input type="button" value="내정보" class=""/></a>
 								<a href="${contextPath}/reservation.do"><input type="button" value="예약내역" class=""/></a>
 								<a href=""><input type="button" value="업체관리" class=""/></a>
 								<a href="${contextPath}/logout.do" onclick="return confirm('정말 로그아웃 하시겠습니까?');"><input type="button" value="로그아웃" class=""/></a>
 							</c:if>
-							<c:if test="${fr_class == 02}">
+							<c:if test="${fr_class == 02}"> <!-- 미승인 오너 -->
 								<a href="${contextPath}/goMyPage.do"><input type="button" value="내정보" class=""/></a>
 								<a href="${contextPath}/goRegiFoodRoomPage.do"><input type="button" value="업체등록" class="" id="regiFormBtn"/></a>
 								<a href="${contextPath}/logout.do" onclick="return confirm('정말 로그아웃 하시겠습니까?');"><input type="button" value="로그아웃" class=""/></a>
 							</c:if>
-							<c:if test="${fr_class == 01}">
+							<c:if test="${fr_class == 01}"> <!-- 관리자 -->
 								<a href="${contextPath}/goApproveFoodRoomPage.do"><input type="button" value="업체 승인" class=""/></a>
 								<a href="${contextPath}/goManageFoodRoomPage.do"><input type="button" value="승인 업체 관리" class=""/></a>
 								<a href="${contextPath}/logout.do" onclick="return confirm('정말 로그아웃 하시겠습니까?');"><input type="button" value="로그아웃" class=""/></a>

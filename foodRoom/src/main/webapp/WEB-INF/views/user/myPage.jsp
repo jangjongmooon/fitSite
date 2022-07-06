@@ -12,9 +12,11 @@
 </head>
 <body>
 	<div id="myPageField">
-		<span>MyPage</span>
 		<form method="get" action="${contextPath}/imsi/myPageUpdateForm.do" id="">
-			<table>
+			<table class="myPageTable">
+				<tr>
+					<th colspan=2><span>MyPage</span></th>
+				</tr>
 				<tr>
 					<td>아이디</td>
 					<td><input type="text" name="fr_id" value="${fr_id}" readonly/></td>
@@ -32,7 +34,7 @@
 					<td><input type="text" name="fr_email" value="${fr_email}" readonly/></td>
 				</tr>
 				<tr>	
-					<td><input type="button" onclick="location.href='${contextPath}/goUpdateMyPage.do'" value="수정하기"/></td>
+					<td colspan=2><input type="submit" value="수정하기"/></td>
 				</tr>
 			</table>
 		</form>

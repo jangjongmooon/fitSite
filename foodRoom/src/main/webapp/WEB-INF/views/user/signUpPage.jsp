@@ -7,6 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>회원가입</title>
+	<link href="${contextPath}/css/foodroom.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
@@ -142,7 +143,7 @@
 	            return false;
 	        }
 	        
-			document.signUpForm.action = "${contextPath}/addUser.do";
+			document.signUpForm.action = "${contextPath}/signUp.do";
 			document.signUpForm.submit();
 		
 		}); // submit버튼		
@@ -154,11 +155,14 @@
 
 <body>
 	<div id="signUpField">
-		<span>회원가입</span>
+		
 		<form id="signUpForm" name="signUpForm" method="post">	
 			<table id="signUpTable">
 				<tr>
-					<td>
+					<th colspan=2><span>회원가입</span></th>
+				</tr>
+				<tr>
+					<td colspan=2>
 						<label><input type="radio" name="fr_class" id="" value="13" checked /> 일반회원</label>
 						<label><input type="radio" name="fr_class" id="" value="02" /> 업체</label>					
 					</td>
@@ -173,13 +177,14 @@
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input type="password" name="fr_pwd" id="fr_pwd" /></td>
+					<td><input type="password" name="fr_pwd" id="fr_pwd" oninput="pwTest();" /></td>
 				</tr>
 				<tr>
 					<td>비밀번호 확인</td>
 					<td><input type="password" name="rePwd" id="rePwd" oninput="pwTest();" /></td>
 				</tr>
 				<tr>
+					<td><span class="">√ 비밀번호 일치 체크 : </span></td>
 					<td><div id="pwdSuccess">비밀번호를 입력해주세요.</div></td>
 				</tr>
 				<tr>

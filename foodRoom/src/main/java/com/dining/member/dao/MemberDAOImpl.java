@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import com.dining.dto.ReservationDTO;
 import com.dining.dto.RoomDTO;
 import com.dining.dto.SelectDTO;
 import com.dining.dto.StoreDTO;
@@ -52,14 +53,64 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 	
 	//-----------------------------------------------------------------------------------------------------------
-	// 선택한 업체의 방 리스트 페이지
+	// 선택한 업체의 예약 가능한 방 리스트 페이지
 	//-----------------------------------------------------------------------------------------------------------
 	@Override
 	public List<RoomDTO> selectStoreRoomList(HashMap<Object, Object> map) throws DataAccessException {
+		
 		List<RoomDTO> selectRoomList = sqlSession.selectList("mapper.room.selectRoomList", map);
 		return selectRoomList;
 	}
+
+	//-----------------------------------------------------------------------------------------------------------
+	// 선택한 업체의 예약 완료된 방 리스트 페이지
+	//-----------------------------------------------------------------------------------------------------------
+	@Override
+	public List<RoomDTO> completionRoomList(HashMap<Object, Object> map) throws DataAccessException {
+		
+		List<RoomDTO> completionRoomList = sqlSession.selectList("mapper.room.completionRoomList", map);
+		return completionRoomList;
+	}
 	
+	//-----------------------------------------------------------------------------------------------------------
+	// 선택한 날짜와 업체의 예약 가능한 방 리스트 페이지
+	//-----------------------------------------------------------------------------------------------------------
+	@Override
+	public List<RoomDTO> selectDateRoomList(HashMap<Object, Object> map) throws DataAccessException {
+		
+		List<RoomDTO> selectDateRoomList = sqlSession.selectList("mapper.room.selectDateRoomList", map);
+		return selectDateRoomList;
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------
+	// 선택한 날짜와 업체의 예약 완료된 방 리스트 페이지
+	//-----------------------------------------------------------------------------------------------------------
+	@Override
+	public List<RoomDTO> completionDateRoomList(HashMap<Object, Object> map) throws DataAccessException {
+		
+		List<RoomDTO> completionDateRoomList = sqlSession.selectList("mapper.room.completionDateRoomList", map);
+		return completionDateRoomList;
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------
+	// 회원 온라인 예약하기
+	//-----------------------------------------------------------------------------------------------------------
+	@Override
+	public int onlineReservation(ReservationDTO reservationDTO) throws DataAccessException {	
+		
+		return sqlSession.insert("mapper.room.onlineReservation", reservationDTO);
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------
+	// 회원 예약내역 확인하기 페이지
+	//-----------------------------------------------------------------------------------------------------------
+	@Override
+	public List<HashMap<String, Object>> myReservation(HashMap<Object, Object> map) throws DataAccessException {
+		
+		List<HashMap<String, Object>> myReservation = sqlSession.selectList("mapper.room.myReservation", map);
+		return myReservation;
+	}
+		
 	//-----------------------------------------------------------------------------------------------------------
     // 룸 목록
     //-----------------------------------------------------------------------------------------------------------

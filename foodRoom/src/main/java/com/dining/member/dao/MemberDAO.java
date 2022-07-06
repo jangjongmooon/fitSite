@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.dao.DataAccessException;
 
+import com.dining.dto.ReservationDTO;
 import com.dining.dto.RoomDTO;
 import com.dining.dto.StoreDTO;
 import com.dining.dto.SelectDTO;
@@ -27,10 +28,35 @@ public interface MemberDAO {
 	public List<StoreDTO> detailFindStoreList(SelectDTO selectDTO) throws DataAccessException;
 	
 	//-----------------------------------------------------------------------------------------------------------
-	// 선택한 업체의 방 리스트 페이지
+	// 선택한 업체의 예약 가능한 방 리스트 페이지
 	//-----------------------------------------------------------------------------------------------------------
 	public List<RoomDTO> selectStoreRoomList(HashMap<Object, Object> map) throws DataAccessException;
-		
+
+	//-----------------------------------------------------------------------------------------------------------
+	// 선택한 업체의 예약 완료된 방 리스트 페이지
+	//-----------------------------------------------------------------------------------------------------------
+	public List<RoomDTO> completionRoomList(HashMap<Object, Object> map) throws DataAccessException;
+	
+	//-----------------------------------------------------------------------------------------------------------
+	// 선택한 날짜와 업체의 예약 가능한 방 리스트 페이지
+	//-----------------------------------------------------------------------------------------------------------
+	public List<RoomDTO> selectDateRoomList(HashMap<Object, Object> map) throws DataAccessException;
+	
+	//-----------------------------------------------------------------------------------------------------------
+	// 선택한 날짜와 업체의 예약 완료된 방 리스트 페이지
+	//-----------------------------------------------------------------------------------------------------------
+	public List<RoomDTO> completionDateRoomList(HashMap<Object, Object> map) throws DataAccessException;
+	
+	//-----------------------------------------------------------------------------------------------------------
+	// 회원 온라인 예약하기
+	//-----------------------------------------------------------------------------------------------------------
+	public int onlineReservation(ReservationDTO reservationDTO) throws DataAccessException;
+
+	//-----------------------------------------------------------------------------------------------------------
+	// 회원 예약내역 확인하기 페이지
+	//-----------------------------------------------------------------------------------------------------------
+	public List<HashMap<String, Object>> myReservation(HashMap<Object, Object> map) throws DataAccessException;
+	
 	//-----------------------------------------------------------------------------------------------------------
     // 룸 목록
     //-----------------------------------------------------------------------------------------------------------
