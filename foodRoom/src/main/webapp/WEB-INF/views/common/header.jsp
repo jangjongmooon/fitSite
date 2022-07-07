@@ -21,7 +21,7 @@
 	<table class="topTable">
 		<tr>
 			<td>
-				<a href="${contextPath}/index.do"><img src="${contextPath}/css/images/1.PNG" width="190" height="90" class="topMenuLogo"></a>
+				<a href="${contextPath}/index.do"><img src="${contextPath}/css/images/logo.png" width="190" height="90" class="topMenuLogo"></a>
 			</td>
 			<td>
 				<a href="" class="topMenuBtn1 topMenuBtn">메뉴1</a>
@@ -42,7 +42,7 @@
 							</c:if>
 							<c:if test="${fr_class == 12}"> <!-- 승인된 오너 -->
 								<a href="${contextPath}/goMyPage.do"><input type="button" value="내정보" class=""/></a>
-								<a href="${contextPath}/reservation.do"><input type="button" value="예약내역" class=""/></a>
+								<a href="${contextPath}/goReservation.do"><input type="button" value="예약내역" class=""/></a>
 								<a href=""><input type="button" value="업체관리" class=""/></a>
 								<a href="${contextPath}/logout.do" onclick="return confirm('정말 로그아웃 하시겠습니까?');"><input type="button" value="로그아웃" class=""/></a>
 							</c:if>

@@ -33,9 +33,9 @@
         <put-attribute name="body"   value="/WEB-INF/views/user/myPage.jsp"/>
     </definition>   
 
-    <definition name="/user/updateMyPagePage" extends="baseLayout">
+    <definition name="/user/updateMyPage" extends="baseLayout">
         <put-attribute name="title"  value="마이 페이지 수정하기"/>
-        <put-attribute name="body"   value="/WEB-INF/views/user/updateMyPagePage.jsp"/>
+        <put-attribute name="body"   value="/WEB-INF/views/user/updateMyPage.jsp"/>
     </definition>
     <!-- end user -->   
             
@@ -48,14 +48,14 @@
    
    	<!-- admin -->
     <definition name="/admin/**" extends="baseLayout">
-        <put-attribute name="title"  value="오너 페이지"/>
+        <put-attribute name="title"  value="관리자 페이지"/>
         <put-attribute name="body"   value="/WEB-INF/views/admin/{1}.jsp"/>
     </definition>
    	<!-- admin owner --> 
    
   	<!-- member -->
     <definition name="/member/**" extends="baseLayout">
-        <put-attribute name="title"  value="오너 페이지"/>
+        <put-attribute name="title"  value="회원 페이지"/>
         <put-attribute name="body"   value="/WEB-INF/views/member/{1}.jsp"/>
     </definition>
 

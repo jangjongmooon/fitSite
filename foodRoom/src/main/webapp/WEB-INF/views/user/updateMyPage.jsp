@@ -7,7 +7,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>마이페이지 변경하기</title>
-	<link href="${contextPath}/css/foodroom.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 

@@ -63,7 +63,7 @@ public class AdminDAOImpl implements AdminDAO {
 	@Override
 	public List<StoreDTO> findStoreOk(String selectText) throws DataAccessException {
 		List<StoreDTO> approveOkSelectStore = sqlSession.selectList("mapper.store.findStoreOk", selectText);	
-		System.out.println(approveOkSelectStore);
+		System.out.println("DAO findStoreOk ==> " + approveOkSelectStore);
 		return approveOkSelectStore;
 	}
 	

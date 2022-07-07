@@ -24,9 +24,38 @@
 	$(document).ready(function() {
 		
 		   // 기입한 룸정보에 대한 유효성 검사
-		   $("#addRoomInfoBtn").on("click", function() {
-		      
-		      
+		   $("#addRoomInfoBtn").on("click", function() {    
+			   
+			  var roomNameRegExp 	= /^[a-zA-Z0-9가-힣]{1,12}$/; // 룸이름 유효성검사
+			  var roomPersonRegExp	= /^[0-9]{1,4}$/;  			 // 룸정원 유효성검사
+			  
+			  var objRoomName    = document.getElementById("fr_room_name"); 	 // 룸이름 입력값 받기
+			  var objRoomPerson  = document.getElementById("fr_room_person_no"); // 룸정원 입력값 받기
+			  
+			  // 룸이름 유효성 검사 영역
+			  if($("#fr_room_name").val() == '') {
+				 alert("룸이름을 입력하십시오");
+				 $("#fr_room_name").focus();
+				 return false;
+			  }
+			  if(!roomNameRegExp.test(objRoomName.value)) {
+	             alert("이름에 특수문자,영어,숫자는 사용할수 없습니다. 한글만 입력하여주세요.");
+	             $("#fr_room_name").focus();
+	             return false;
+	          }
+			
+			  // 룸정원 유효성 검사 영역
+			  if($("#fr_room_person_no").val() == '') {
+				 alert("룸정원을 입력하십시오");
+				 $("#fr_room_person_no").focus();
+				 return false;
+			  }
+			  if(!roomPersonRegExp.test(objRoomPerson.value)) {
+	             alert("룸정원에 숫자만 입력하여주세요.");
+	             $("#fr_room_person_no").focus();
+	             return false;
+	          }
+			  
 		      document.addRoomInfoForm.action="${contextPath}/addRoomInfo.do";
 		      document.addRoomInfoForm.submit();   
 		      
@@ -55,10 +84,10 @@
 						<td class="">
 								<span class="">[미리보기]</span><br/>
 								<div class="">
-									<input id="asd" type="file" name="fr_imageFile" onchange="readURL(this);" style="display:none;"/>
+									<input id="asd" type="file" name="fr_room_image" onchange="readURL(this);" style="display:none;"/>
 								</div>	
 								<img id="addd" width="120" height="120"/>
-								<label for="" class="">▶파일 첨부</label>
+								<label for="asd" class="">▶파일 첨부</label>
 						</td>
 					</tr>
 					<tr>

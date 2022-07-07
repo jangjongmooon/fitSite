@@ -99,7 +99,7 @@ public class OwnerControllerImpl implements OwnerController {
     //-----------------------------------------------------------------------------------------------------------
     // 업체 예약관리 달력 페이지 (달력 불러올 때 예약 리스트 가져오기)
     //-----------------------------------------------------------------------------------------------------------
-    @RequestMapping(value="/reservation.do", method=RequestMethod.GET)
+    @RequestMapping(value="/goReservation.do", method=RequestMethod.GET)
     public ModelAndView reservation(HttpServletRequest request, HttpServletResponse response) throws Exception {
       
     	HttpSession session = request.getSession();
@@ -155,11 +155,15 @@ public class OwnerControllerImpl implements OwnerController {
 		//예약 가능한 룸 리스트
 		List<RoomDTO> frRoomNoList = ownerDAO.frRoomNoList(map);
 		
+		//휴무 지정 판단 --- count 0 = 정상영업중 , count >=1 휴무
+		int revCnt = ownerDAO.revCnt(map);
+				
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/owner/reservationForm");
         
         mav.addObject("revRoomList", revRoomList);
 		mav.addObject("frRoomNoList", frRoomNoList);
+		mav.addObject("revCnt", revCnt);
 		mav.addObject("fr_reservation_date", fr_reservation_date);
 		
         return mav;
@@ -252,8 +256,7 @@ public class OwnerControllerImpl implements OwnerController {
 		String fr_id = (String)session.getAttribute("fr_id");
 		
 		System.out.println("fr_reservation_date ==>" + fr_reservation_date);		
-		int fr_no = ownerDAO.findFr_no(fr_id);
-		
+		int fr_no = ownerDAO.findFr_no(fr_id);	
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("fr_reservation_date", fr_reservation_date);
@@ -265,6 +268,5 @@ public class OwnerControllerImpl implements OwnerController {
 		mav.addObject("fr_reservation_date", fr_reservation_date);
 		return mav;
 	}
-
     
-}
+} // End - public class OwnerControllerImpl implements OwnerController

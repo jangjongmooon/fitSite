@@ -12,44 +12,7 @@
 <!-- 주소 찾기 api -->
 <script src="http://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
-<style>
-	.store_ok{
-	color:#008000;
-	display: none;
-	}
-
-	.store_already{
-	color:#6A82FB; 
-	display: none;
-	}
-</style>
-
 <script>
-	function checkStore(){	//업체명 중복 체크
-		
-		var valStore = $('#fr_store_name').val();
-	
-		$.ajax({
-			url:	"${contextPath}/checkSname.do",
-			type:	"post",
-			data:	{fr_store_name:valStore},
-			dataType:	"json",
-			async:	false,
-			success:	function(cnt) {	//컨트롤러에서 넘어온 cnt값을 받는다.
-				
-				if(cnt==0) {	//cnt가 1이 아니면(=0일 경우) -> 사용 가능한 아이디
-					$('.store_ok').css("display","inline-block"); 
-	                $('.store_already').css("display", "none");
-				}
-				else {	// cnt가 1일 경우 -> 이미 존재하는 아이디  
-					$('.store_already').css("display","inline-block");
-	                $('.store_ok').css("display", "none");
-					alert("이미 사용중인 업체명입니다.");
-					$('#fr_store_name').val('');
-				}
-			}		
-		});				
-	}; // function checkStore()
 
 	function daumZipCode() {
 		new daum.Postcode({
@@ -122,7 +85,7 @@
 								$("#storeNameChkMsg").html("영문&숫자 4~12자리만 가능합니다");
 								$("#storeNameChkMsg").css("color","pink")
 								$("#regiBtn").prop("disabled", true);
-					        } else if (data == 0) {									// 업체명이 DB와 겹치지 않는 경우.
+					        } else if ($.trim(data) == 0) {									// 업체명이 DB와 겹치지 않는 경우.
 								$("#storeNameChkMsg").html("등록 가능한 업체명 입니다.");	
 								$("#storeNameChkMsg").css("color","skyblue")
 								$("#regiBtn").prop("disabled", false);
@@ -201,12 +164,7 @@
 				<tr>
 					<td><span class="">√ 업체명 중복 체크 : </span></td>
 					<td id="storeNameChkMsg">업체명 입력해주세요.</td>
-				</tr>
-				<tr>
-					<!-- ajax 업체명 중복체크 -->
-					<td class="store_ok">사용 가능한 업체명입니다.</td>
-					<td class="store_already">이미 사용중인 업체명입니다.</td>
-				</tr>			
+				</tr>		
 				<tr>
 					<td>업체연락처</td>
 					<td><input type="text" name="fr_store_p_number" id="fr_store_p_number" /></td>

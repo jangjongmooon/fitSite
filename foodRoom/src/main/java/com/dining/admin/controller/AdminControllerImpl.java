@@ -87,15 +87,15 @@ public class AdminControllerImpl implements AdminController {
 		List<StoreDTO> approveOkSelect = new ArrayList<> ();
 
 		if(selectChk.equals("fr_store_name")) {
-			approveOkSelect = adminDAO.findStoreOk(selectText);
 			System.out.println("fr_store_name => "+selectText);
+			approveOkSelect = adminDAO.findStoreOk(selectText);		
 		}
 		else {
-			approveOkSelect = adminDAO.findAddressOk(selectText);
 			System.out.println("fr_address => "+selectText);
+			approveOkSelect = adminDAO.findAddressOk(selectText);
 		}
 		
-		ModelAndView mav = new ModelAndView("/admin/manageFoodRoom");
+		ModelAndView mav = new ModelAndView("/admin/manageFoodRoomPage");
 		mav.addObject("approveOk", approveOkSelect);
 		return mav;
 	}
@@ -135,10 +135,8 @@ public class AdminControllerImpl implements AdminController {
 	@RequestMapping(value="/addRoomInfo.do", method=RequestMethod.POST)
 	public ModelAndView addRoomInfo(@ModelAttribute("roomDTO") RoomDTO roomDTO, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-
-		ModelAndView mav = new ModelAndView();
 		
-		System.out.println(roomDTO);
+		System.out.println("addRoom ==>" + roomDTO);
 		
 		Map<String, String> roomImageMap	= uploadRoomInfo(request, response);
 
@@ -148,18 +146,20 @@ public class AdminControllerImpl implements AdminController {
 		roomDTO.setFr_room_image(roomImageMap.get("fr_room_image"));
 		System.out.println(roomDTO);
 		
-		int result = adminDAO.addRoomImage(roomDTO);		
+		int result = adminDAO.addRoomImage(roomDTO);
+		System.out.println("게시글 추가 controller 결과 freeboard_no ==> " + result);
 
-		if(roomImageMap.get("fr_room_image") != null && roomImageMap.get("fr_room_image").length() != 0) {
-			File srcFile = new File(ROOM_IMAGE_REPO + "\\" + roomImageMap.get("fr_room_image"));
-			File destDir = new File(ROOM_IMAGE_REPO + "\\" + roomDTO.getFr_no());
+		if(roomImageMap.get("fr_room_image") != null && roomImageMap.get("fr_room_image").length() != 0) { // 둘 중 하나가 작동 하지 않을 때가 있다.
+			File srcFile = new File(ROOM_IMAGE_REPO + "\\" + roomImageMap.get("fr_room_image")); 		   // 이미지 파일을 저장한 경로
+			File destDir = new File(ROOM_IMAGE_REPO + "\\" + roomDTO.getFr_no());						   // 해당 경로 + fr_no(업체번호) 폴더를 생성
 			
 			destDir.mkdirs();
 			FileUtils.moveFileToDirectory(srcFile, destDir, true);
 		}
-
+		
+		ModelAndView mav = new ModelAndView();
 		mav = new ModelAndView("redirect:/goRoomListPage.do?fr_no=" + roomDTO.getFr_no());
-	
+		
 		return mav;
 	}
 	
@@ -210,8 +210,17 @@ public class AdminControllerImpl implements AdminController {
 						// "ABCDEFGHIJ"
 						// substring(4) = > 인덱스번호 4이상 모든 값 => EFGHIJ
 						// substring(3, 7) => 인덱스번호 3번 부터 7번 전까지 => DEFG
-						String fileName = fileItem.getName().substring(idx+1);
+						// String fileName = fileItem.getName().substring(idx+1);
 						
+						// 파일 이름을 room_img로 통일한다. (추 후 수정편의성)
+						String reName = roomImageMap.get("fr_no")+"-"+roomImageMap.get("fr_room_name");
+						
+						// 파일 고유 네임값을 불러온 뒤
+						String f_Name = fileItem.getName();
+						// 파일 확장자를 분리한다.
+						String ext = f_Name.substring(f_Name.lastIndexOf(".") + 1);
+						// 저장할 파일명을 reName과 확장자의 조합으로 명명한다.
+						String fileName = reName+"."+ext;
 						
 						// 업로드한 파일의 이름으로 저장소(currentDirPath)에 파일을 업로드 한다.
 						// File uploadFile = new File(currentDirPath + "\\" + fileName);
