@@ -190,7 +190,7 @@ public class MemberControllerImpl implements MemberController {
 		System.out.println("reservationVO에 세션 추가 값 => "+ reservationDTO);
 		memberDAO.onlineReservation(reservationDTO);
 		
-		ModelAndView mav = new ModelAndView("redirect:/index.do");
+		ModelAndView mav = new ModelAndView("redirect:/myReservationForm.do");
 		return mav;
 	}
 	
@@ -230,7 +230,7 @@ public class MemberControllerImpl implements MemberController {
 		List<HashMap<String, Object>> myReservationList = memberDAO.myReservation(map);	// 회원이 예약한 룸 List로 보여주기	
 		System.out.println("myReservation DB에서 가져온 값 => "+ myReservationList);
 		
-		ModelAndView mav = new ModelAndView("/member/lookReservationList");
+		ModelAndView mav = new ModelAndView("/member/myReservationList");
 		mav.addObject("myReservationList", myReservationList);
 		return mav;
 	}

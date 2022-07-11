@@ -46,22 +46,20 @@ var fr_reservation_date = param.get('fr_reservation_date');
 	        data:      {fr_room_no: mfr_room_no , fr_reservation_date: fr_reservation_date},
 	        async:      false,
 	        success:   function(data) {
-	           tr='<table><tr>'+
-	            '<th>예약일자</th>'+
-	            '<th>회원이름</th>'+
-	            '<th>예약정원</th></tr>';
+	           tr	='<table class="revUserListTable"><tr>'
+	           		+'<th>예약일자</th>'
+	           		+'<th>회원이름</th>'
+	           		+'<th>회원연락처</th>'
+	            	+'<th>예약정원</th></tr>';
 	            
 	            if(data.length>=1){
 	            $(data).each(function(r, item){
-			              tr+='<tr><td>'+ data[r].fr_reservation_date + '</td>'+
-			              '<td>'+ data[r].fr_name + '</td>'+
-			              '<td>'+ data[r].fr_reservation_person_no+'</td></tr>';
+			              tr	+=	'<tr><td>'+ data[r].fr_reservation_date + '</td>'
+			              		+'<td>'+ data[r].fr_name + '</td>'
+			              		+'<td>'+ data[r].fr_p_number + '</td>'
+			              		+'<td>'+ data[r].fr_reservation_person_no+'</td></tr>';
 	            });
 	            }
-	            
-	     		 else{
-		            tr+='<tr><td colspan=3>예약된 회원이 없습니다.</td></tr>';	
-	            	}
 	           $("#reservatioinList").html(tr);
 	        }
 	    });    
@@ -140,11 +138,12 @@ var fr_reservation_date = param.get('fr_reservation_date');
 					<span class="">룸정원 : </span>
 					<span class="">${revRoomList.fr_room_person_no} 명</span>	
 					<div>
-					<span style="display:none;">${revRoomList.fr_room_no}</span>
-									  			 <button type="button" class="reservationBtn">예약현황</button>
+						<span style="display:none;">${revRoomList.fr_room_no}</span>
+						<button type="button" class="reservationBtn">예약현황</button>
 						<a href="${contextPath}/cancleRev.do?fr_room_no=${revRoomList.fr_room_no}&fr_reservation_date=${fr_reservation_date}"
 									  			 onclick="return confirm('[${revRoomList.fr_room_name}] 룸을 예약 취소 하시겠습니까?');" class="">
-									  			 <button type="button" id="">예약취소</button></a>
+							<button type="button" id="">예약취소</button>
+						</a>
 					</div>
 				</div>
 			</c:forEach>

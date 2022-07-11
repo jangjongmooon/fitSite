@@ -15,11 +15,12 @@
 	</resultMap>
 
 	<resultMap id="revResult" type="com.dining.dto.ReservationDTO">
-		<result property="fr_reservation_date"			column="fr_reservation_date"/>
+		<result property="fr_room_no"					column="fr_room_no"/>
+		<result property="fr_name"						column="fr_name"/>
+		<result property="fr_p_number"					column="fr_p_number"/>
 		<result property="fr_reservation_person_no"		column="fr_reservation_person_no"/>
 		<result property="fr_reservation_date"			column="fr_reservation_date"/>
-		<result property="fr_reservation_ox"			column="fr_reservation_ox"/>
-		<result property="fr_room_no"					column="fr_room_no"/>
+		<result property="fr_reservation_ox"			column="fr_reservation_ox"/>		
 	</resultMap>
 	
 	<resultMap id="setRevResult" type="com.dining.dto.SetRevDTO">
@@ -63,7 +64,7 @@
 		SELECT *
 		FROM   fr_reservation
 		WHERE  fr_room_no in (SELECT fr_room_no
-							  FROM   fr_store
+							  FROM   fr_room_info
 							  WHERE  fr_no = #{fr_no})
 	</select>
 	
