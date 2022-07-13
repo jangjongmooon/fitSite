@@ -17,8 +17,7 @@
 		
        	var tid 		= document.getElementById('fr_id');
         var id_RegExpCn = /^[a-zA-Z0-9]{4,12}$/;
-	    var	_id1		= $("#fr_id").val();
-	    
+	    var	_id1		= $("#fr_id").val();    
 	        
 				$.ajax({	// 아이디 중복 체크 기능
 						type:		"post",
@@ -33,19 +32,27 @@
 							if (tid.value == '' || tid.value == null) {				// 아이디 입력란이 공백인 경우.
 								$("#idChkMsg").html("아이디를 입력해주세요.");
 								$("#idChkMsg").css("color","white")
-								$("#signUpBtn").prop("disabled", true);								
+								$("#signUpBtn").prop("disabled", true);
+								$("#signUpBtn").css("color","#1de2e2")
+								$("#signUpBtn").css("background","white")
 							} else if (!id_RegExpCn.test(tid.value)) {				// 아이디에 특수문자나 공백이 들어간 경우.
 								$("#idChkMsg").html("영문&숫자 4~12자리만 가능합니다");
 								$("#idChkMsg").css("color","pink")
 								$("#signUpBtn").prop("disabled", true);
+								$("#signUpBtn").css("color","#1de2e2")
+								$("#signUpBtn").css("background","white")
 					        } else if ($.trim(data) == 0) {							// 아이디가 DB와 겹치지 않는 경우.
 								$("#idChkMsg").html("등록 가능한 아이디 입니다.");	
 								$("#idChkMsg").css("color","skyblue")
 								$("#signUpBtn").prop("disabled", false);
+								$("#signUpBtn").css("color","white")
+								$("#signUpBtn").css("background","#1de2e2")
 							} else {												// 아이디가 DB와 겹치는 경우.
 								$("#idChkMsg").html("이미 사용중인 아이디 입니다.");
 								$("#idChkMsg").css("color","pink")
 								$("#signUpBtn").prop("disabled", true);
+								$("#signUpBtn").css("color","#1de2e2")
+								$("#signUpBtn").css("background","white")
 							}
 						}
 				});
@@ -155,12 +162,9 @@
 
 <body>
 	<div id="signUpField">
-		
+		<div class="signUpFieldLogo"><a href="${contextPath}/index.do" class="signUpFieldLogo">FOODROOM</a></div>
 		<form id="signUpForm" name="signUpForm" method="post">	
 			<table id="signUpTable">
-				<tr>
-					<th colspan=2><span>회원가입</span></th>
-				</tr>
 				<tr>
 					<td colspan=2>
 						<label><input type="radio" name="fr_class" id="" value="13" checked /> 일반회원</label>
@@ -168,40 +172,31 @@
 					</td>
 				</tr>
 				<tr>
-					<td>아이디</td>
-					<td><input type="text" name="fr_id" id="fr_id" class="joinInput" maxlength="12" placeholder="아이디 입력" oninput="fnc_process();"/></td>	
+					<td><input type="text" name="fr_id" id="fr_id" class="joinInput signUpInfo" placeholder="아이디 입력" oninput="fnc_process();"/></td>	
 				</tr>
 				<tr>
-					<td><span class="">√ 아이디 중복 체크 : </span></td>
 					<td id="idChkMsg">아이디를 입력해주세요.</td>
 				</tr>
 				<tr>
-					<td>비밀번호</td>
-					<td><input type="password" name="fr_pwd" id="fr_pwd" oninput="pwTest();" /></td>
+					<td><input type="password" name="fr_pwd" id="fr_pwd" class="signUpInfo" placeholder="비밀번호 입력" oninput="pwTest();" /></td>
 				</tr>
 				<tr>
-					<td>비밀번호 확인</td>
-					<td><input type="password" name="rePwd" id="rePwd" oninput="pwTest();" /></td>
+					<td><input type="password" name="rePwd" id="rePwd" class="signUpInfo" placeholder="비밀번호 확인" oninput="pwTest();" /></td>
 				</tr>
 				<tr>
-					<td><span class="">√ 비밀번호 일치 체크 : </span></td>
-					<td><div id="pwdSuccess">비밀번호를 입력해주세요.</div></td>
+					<td id="pwdSuccess">비밀번호를 입력해주세요.</td>
 				</tr>
 				<tr>
-					<td>이름</td>
-					<td><input type="text" name="fr_name" id="fr_name" /></td>
+					<td><input type="text" name="fr_name" id="fr_name" placeholder="이름 입력" class="signUpInfo" /></td>
 				</tr>
 				<tr>
-					<td>연락처</td>
-					<td><input type="text" name="fr_p_number" id="fr_p_number" /></td>
+					<td><input type="text" name="fr_p_number" id="fr_p_number" placeholder="연락처 입력" class="signUpInfo" /></td>
 				</tr>
 				<tr>
-					<td>이메일</td>
-					<td><input type="text" name="fr_email" id="fr_email" /></td>
+					<td><input type="text" name="fr_email" id="fr_email" placeholder="이메일 입력" class="signUpInfo" /></td>
 				</tr>
 				<tr>
-					<td><button type="button" id="signUpBtn" >가입하기</button></td>
-					<td><button type="button" id="" onclick="location.href='${contextPath}/cancelMembership.do'">가입취소</button></td>					
+					<td><button type="button" id="signUpBtn" disabled>가입하기</button></td>					
 				</tr>
 			</table>
 		</form>

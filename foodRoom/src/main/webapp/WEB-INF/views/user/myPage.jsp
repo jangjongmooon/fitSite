@@ -13,26 +13,28 @@
 	<div id="myPageField">	
 		<table class="myPageTable">
 			<tr>
-				<th colspan=2><span>MyPage</span></th>
+				<th colspan=2><span>내프로필</span></th>
 			</tr>
 			<tr>
 				<td>아이디</td>
-				<td><input type="text" name="fr_id" value="${fr_id}" readonly/></td>
+				<td><input type="text" name="fr_id" value="${fr_id}" class="myPageInfo" readonly/></td>
 			</tr>
 			<tr>
 				<td>이름</td>
-				<td><input type="text" name="fr_name" value="${fr_name}" readonly/></td>
+				<td><input type="text" name="fr_name" value="${fr_name}" class="myPageInfo" readonly/></td>
 			</tr>
 			<tr>
 				<td>연락처</td>
-				<td><input type="text" name="fr_p_number" value="${fr_p_number}" readonly/></td>
+				<td><input type="text" name="fr_p_number" value="${fr_p_number}" class="myPageInfo" readonly/></td>
 			</tr>
 			<tr>
 				<td>이메일</td>
-				<td><input type="text" name="fr_email" value="${fr_email}" readonly/></td>
+				<td><input type="text" name="fr_email" value="${fr_email}" class="myPageInfo" readonly/></td>
 			</tr>
 			<tr>	
-				<td colspan=2><a href="${contextPath}/goUpdateMyPage.do"><input type="button" value="수정하기"/></a></td>
+				<td colspan=2>
+					<a href="${contextPath}/goUpdateMyPage.do"><input type="button" id="myPageModBtn" value="수정하기"/></a>
+				</td>
 			</tr>
 		</table>
 	</div>

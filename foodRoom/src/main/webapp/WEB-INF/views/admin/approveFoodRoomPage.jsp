@@ -13,10 +13,11 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="">
-    <!-- 업체등록 승인요청란 -->	
-	<span class="">* 업체등록 승인요청</span>		  
-       <table class="">           		
+<div id="approveFormField">
+	   <div class="approveFormSpan">
+	   		<span>업체승인</span>
+	   </div>		  
+       <table class="approveFormTable">           		
 		<tr>
 			<th><b>아이디</b></th>
 			<th><b>업체명</b></th>

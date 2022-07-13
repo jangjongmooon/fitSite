@@ -1,17 +1,17 @@
 @charset "UTF-8";
 
-html,
 body {
-	width:100%;
-	height:100%;
-	margin: 0;
+	width:  1550px;
+	height:	750px;
+	margin: 0;	
 }
 /* 레이아웃 기본 설정 */
 #container {			/* 레이아웃.jsp 파일에서 모든 영역을 돋보이게 하기 위한 효과로 모든 범위에 부여 */
-position: relative;
+
 width:		100%;
 height:		100%;
 text-align:					center;					/* 내부 컨텐츠 정렬방식 */
+
 }
 
 #content {
@@ -43,7 +43,7 @@ width:						100%;		/* 테이블 가로 길이 */
 }
 
 table.topTable tr {						/* 테이블 행 옵션 */
-height:						70px;		/* 행 높이 고정값으로 부여 */ 
+height:						100%;		/* 행 높이 고정값으로 부여 */ 
 vertical-align:		 		center;		/* 행 내부 개체 정렬방식 */
 }
 
@@ -67,11 +67,11 @@ cursor : 					pointer;	/* 마우스오버시 마우스포인터 변경 */
 }
 
 .topMenuLogo {
-margin:		0 0 0 100px;
+margin:		0 0 0 10%;
 }
 
 .topMenuLoginBtn {
-margin:		0 100px 0 0;	
+margin:		0 10% 0 0;	
 }
 
 .userName {
@@ -90,7 +90,7 @@ color:	black;
 .infoView {
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
+  background-color: white;
   min-width: 180px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -103,12 +103,21 @@ color:	black;
   display: block;
 }
 
-.infoView a:hover {background-color: #ddd;}
+.infoViewBtn {
+  text-decoration: none;
+  color: black;
+  padding: 10px 30px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+}
 
 .dropdown:hover .infoView {display: block;}
 
-.dropdown:hover .userName {background-color: #3e8e41;}
-
+.infoViewBtn:hover {cursor :	pointer; background-color: #1de2e2;}
 /**/
 
 
@@ -119,7 +128,7 @@ width:						100%;		/* 테이블 가로 길이 */
 }
 
 table.footTable tr {						/* 테이블 행 옵션 */
-min-height:						100px;		/* 행 높이 고정값으로 부여 */ 
+height:					    100%;		/* 행 높이 고정값으로 부여 */ 
 vertical-align:		 		top;		
 }
 
@@ -138,45 +147,438 @@ text-shadow: 				2px 2px 3px silver;		/* 글자 그림자 - x축, y축, 번짐�
 
 /* 로그인 */
 #loginField {
-
+width:	50%;
+height: 50%;
 display: inline-block;
+margin:	 10% 0 0 0;
 }
 
-table.loginTable {			/* 마이페이지 내 정보가 출력되는 영역 테이블 */
-
-background-color:			silver;
+.loginFieldLogo {
+text-decoration: none;
+color:		#1de2e2;
+font-size:	30px;
 }
+
+#loginForm {
+width: 80%;
+height: 80%;
+margin:	5% auto;
+}
+
+table.loginTable {
+width:	100%;
+height:	100%;
+border:	 1px solid silver;
+background-color:			white;
+border-radius: 10px;
+}
+
+table.loginTable a {
+text-decoration: none;
+color:	silver;
+}
+
+.loginInfo {
+  width:	70%;
+  text-decoration: none;
+  color: black;
+  padding: 10px 30px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+}
+.btn-gradient {
+  width: 90%;
+  text-decoration: none;
+  color: white;
+  padding: 10px 30px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  background-color: #1de2e2;
+}
+
+.btn-gradient:hover {
+cursor :	pointer;
+}
+
 
 /* 회원가입 */
 #signUpField {
-
+width:	60%;
+height:	100%;
 display: inline-block;
 }
 
-table.signUpTable {			/* 마이페이지 내 정보가 출력되는 영역 테이블 */
-
-background-color:			silver;
+#signUpForm {
+width:  100%;
+height: 100%;
+margin:	2% 0 0 0;
 }
+table.signUpTable {			
+width:  100%;
+height: 80%;
+
+}
+
+table.signUpTable td {
+	width:	100%;	
+}
+
+
+.signUpFieldLogo {
+margin:		5% 0 0 0;
+text-decoration: none;
+color:		#1de2e2;
+font-size:	30px;
+	
+}
+
+.signUpInfo {
+  width: 40%;
+  text-decoration: none;
+  color: black;
+  padding: 10px 30px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);	
+}
+
+#signUpBtn {
+  width: 50%;
+  text-decoration: none;
+  color: #1de2e2;
+  padding: 10px 30px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  	
+}
+
+#signUpBtn:hover {
+cursor :	pointer;	
+}
+
+/* 아이디/비밀번호 찾기 */
+#findField {
+	width:	100%;
+	height:	100%;
+	display: inline-block; 
+}
+
+#findFieldSelect {
+	width:	100%;
+	height:	10%;
+	text-align:	center;
+	margin:	5% 0 0 0;
+}
+
+#idFindTable, #pwdFindTable {
+	width:	100%;
+	height:	70%;	
+}
+
+#idFindTable td, #pwdFindTable td{
+	width: 50%;
+	text-align:	center;
+}
+
+#findIdView, #findPwdView {
+	width:	100%;
+	height:	20%;
+}
+
+.findInfo {
+  width:	40%;
+  text-decoration: none;
+  color: black;
+  padding: 10px 30px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+}
+
+#findIdBtn {
+  width: 50%;
+  text-decoration: none;
+  color: white;
+  padding: 10px 30px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  background-color: #1de2e2;
+}
+
+
+#findPwdBtn {
+  width: 50%;
+  text-decoration: none;
+  color: white;
+  padding: 10px 30px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  background-color: #1de2e2;
+}
+
+
+
 
 /* 마이페이지 */
 #myPageField {
-
+width:40%;
+height:	90%;
 display: inline-block;
+margin:	5% 0 0 0;
 }
 
-table.myPageTable {			/* 마이페이지 내 정보가 출력되는 영역 테이블 */
-
-background-color:			silver;
+.myPageTable {
+border: 1px solid silver;
+border-collapse:collapse;
+width:100%;
+height:	80%;
+margin:	5% 0 0 0;
 }
+
+.myPageTable th {
+width:100%;
+color:	white;
+background-color: #1de2e2;
+
+}
+
+.myPageTable td {
+	width:50%;
+}	
+
+.myPageInfo {
+  width:	50%;
+  text-decoration: none;
+  color: black;
+  padding: 10px 30px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  text-align: center;	
+}
+
+
+#myPageModBtn {
+  width:	40%;
+  text-decoration: none;
+  color: white;
+  padding: 10px 30px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  background-color:	#1de2e2;	
+}
+
+#myPageModBtn:hover {
+cursor :	pointer;
+}
+
+/* 마이페이지 수정 */
 
 #myPageUpdateField {
+width:40%;
+height:	90%;
+display: inline-block;
+margin:	3% 0 0 0;
+}
 
+#myPageUpdateForm {
+width:	100%;
+height:	100%;
+}
+
+table.myPageUpdateTable {			
+width:	100%;
+height:	100%;
+border: 1px solid silver;
+border-collapse:collapse;
+}
+
+table.myPageUpdateTable th {			
+color:	white;
+background-color: #1de2e2;
+}
+
+table.myPageUpdateTable td {			
+width:50%;
+}
+
+.myPageUpdateInfo {
+  width:	50%;
+  text-decoration: none;
+  color: black;
+  padding: 10px 30px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  text-align: center;	
+}
+
+
+#myPageUpdateBtn {
+  width:	40%;
+  text-decoration: none;
+  color: white;
+  padding: 10px 30px;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  background-color:	#1de2e2;		
+}
+
+#myPageUpdateBtn:hover {
+cursor :	pointer;
+}
+
+/* admin 업체승인 페이지 */
+#approveFormField {
+width:100%;
+height:100%;
 display: inline-block;
 }
 
-table.myPageUpdateTable {			/* 마이페이지 내 정보가 출력되는 영역 테이블 */
+.approveFormSpan {
+width:80%;
+height: 10%;
+margin: 2% 0 0 10%;
+font-size:	20px;
 
-background-color:			silver;
+}
+
+table.approveFormTable {
+width:80%;
+height: auto;
+margin: 0 0 0 10%;
+border:	1px solid white;
+border-collapse: collapse;
+}
+
+table.approveFormTable th {
+	color:	white;
+	border:	1px solid white;
+	background-color: #1de2e2;	
+	height: 30px;
+}
+
+table.approveFormTable td {
+	height: 50px;
+	border-bottom:	1px solid silver;
+}
+
+/* admin 업체관리 페이지 */
+#manageFoodRoomField {
+width:100%;
+height:100%;
+display: inline-block;
+}
+
+.manageFoodRoomSpan {
+width:80%;
+height: 10%;
+margin: 2% 0 0 10%;
+font-size:	20px;	
+}
+
+.manageFoodRoomTableField {
+	width:80%;
+	height: 70%;
+	margin: 0 0 0 10%;
+}
+
+.manageFoodRoomFormField {
+	width:80%;
+	height: 10%;
+	margin: 0 0 5% 10%;
+}
+#manageFoodRoomForm {
+width:100%;
+height: 10%;
+}
+
+table.manageFoodRoomTable {
+width:100%;
+height: auto;	
+border:	1px solid white;
+border-collapse: collapse;
+
+}
+
+table.manageFoodRoomTable th {
+	color:	white;
+	border:	1px solid white;
+	background-color: #1de2e2;	
+	height: 30px;
+}
+
+table.manageFoodRoomTable td {
+	height: 50px;
+	border-bottom:	1px solid silver;
+}
+
+
+.selectText {
+width: 40%;
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+}
+
+.findStoreListBtn {
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+}
+
+.findStoreListBtn:hover {
+cursor :	pointer; 
 }
 
 
@@ -223,7 +625,7 @@ font-size:					16px;
 }
 
 table.calendarList td.calendarListTop {
-background:					black;
+background:					 #1de2e2;
 height:						50px;
 color: 						white;
 font-size:					16px;
@@ -245,6 +647,16 @@ font-size:					16px;
 
 /* owner */
 
+#reservationFormField {
+	width:100%; 
+	height:100%; 
+	overflow:scroll;
+}
+
+.reservationFormDay {
+	width:100%; height:4%;
+}
+
 .reservationPossible {
 	width:		49%;
 	height:		95%;
@@ -256,6 +668,75 @@ font-size:					16px;
 	height:		95%;
 	float:		right;
 }
+
+.reservationPossibleField {
+	width:	80%;
+	min-height:150px;
+	margin: 0 0 1% 10%;
+	border: 1px solid silver;
+}
+
+.reservatioinImpossibleField {
+	width:	80%;
+	min-height:150px;
+	margin: 0 0 1% 10%;
+	border: 1px solid silver;
+}
+
+.offReservationBtnField {
+	padding: 1% 0 0 0;
+	clear: left;
+}
+
+.reservationFormBtn {
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+}
+
+.reservationFormBtn:hover {
+	cursor :	pointer;
+}
+
+.reservationBtn {
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+  position: relative;
+  border: 1px solid rgba(0,0,0,0.21);
+  border-bottom: 4px solid rgba(0,0,0,0.21);
+  border-radius: 4px;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+}
+
+.reservationBtn:hover {
+	cursor :	pointer;
+}
+
+table.revUserListTable { /* 예약현황 table */
+	width:100%;
+height: auto;	
+border:	1px solid white;
+border-collapse: collapse;
+}
+
+table.revUserListTable th {
+	color:	white;
+	border:	1px solid white;
+	background-color: #1de2e2;	
+	height: 30px;
+}
+
+table.revUserListTable.td {
+		height: 50px;
+	border-bottom:	1px solid silver;
+}
+
 /* 관리자 룸 정보 */
 .lookRoomView1 {
 	border: 1px solid black;
@@ -285,11 +766,12 @@ font-size:					16px;
 }
 
 .main1 {
-	width:  600px;
+	width:  400px;
 	height: 100%;
-	margin: 0 auto;
-	padding:	0 480px 0 0;
+	margin: 0 200px 0 0;
+	padding:0 30px 0 0;	
 }
+
 .main1>li {
 	float: left;
 	width: 25%;
@@ -302,6 +784,7 @@ font-size:					16px;
 }
 .main1>li a {
 	display: block;
+	
 }
 .main1>li a:hover {
 	background: #1de2e2;
@@ -309,30 +792,68 @@ font-size:					16px;
 	font-weight: bold;
 }
 .main2 {
+	width: 100%;
 	position: absolute;
 	top: 50px;
 	left: -9999px;
 	background: #ffffff;
-	width: 120%;
+	
 }
 .main2>li {
 	position: relative;
+	
 }
 .main2>li:hover .main3 {
 	left: 100%;
 }
 .main2>li a, .main3>li a {
 	border-radius: 10px;
-	margin: 10px;
+	margin: 0;
 }
 .main3 {
 	position: absolute;
-	top: 0;
-	background: #ffffff;
-	width: 80%;
-	left: -9999px;
+	top: 0;background: #ffffff;
+	width: 100%;
+	left: -9999px;  
+	/*left: 100%;*/
+	/*display: none;*/
 }
 .main3>li a:hover {
 	background: #1de2e2;
 	color: #fff;
+}
+
+
+/* member */
+
+#storeListPageField {
+	width:80%;
+	height:100%;
+	display: inline-block;	
+}
+
+.storeList {
+	width:100%;
+	height:70%;
+	 border:1px solid black;
+}
+
+table.storeListTable {
+	width:100%;
+	height:auto;
+	border:	1px solid white;
+    border-collapse: collapse;	
+   
+}
+
+table.storeListTable th {
+	color:	white;
+	border:	1px solid white;
+	background-color: #1de2e2;	
+	height: 30px;	
+}
+
+table.storeListTable td {
+	height: 50px;
+	border-bottom:	1px solid silver;	
 }

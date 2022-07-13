@@ -8,6 +8,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>룸정보 수정하기</title>
+	<link href="${contextPath}/css/foodroom.css" rel="stylesheet"> 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script> 
 			
@@ -26,9 +27,9 @@
 	
 	$(document).ready(function() {
 		
-		// 게시글 수정
+		// 룸정보 수정
 		$("#modBtn").on("click", function() {
-			if (confirm("게시글을 수정 하시겠습니까??") == true) {
+			if (confirm("룸정보를 수정 하시겠습니까??") == true) {
 				document.freeboard.action = "${contextPah}/freeboard/modPosts.do";
 				document.freeboard.submit();
 			} else {
@@ -38,7 +39,7 @@
 		
 		// 룸정보 삭제
 		$(".deleteRoomInfo").on("click", function() {		
-			if (confirm("게시글을 삭제 하시겠습니까??") == true) {
+			if (confirm("룸정보를 삭제 하시겠습니까??") == true) {
 				location = "";
 			} else {
 				return;

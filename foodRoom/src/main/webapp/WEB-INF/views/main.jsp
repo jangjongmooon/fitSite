@@ -21,8 +21,6 @@
 </head>
 
 <body>
-	메인페이지 입니다.
-	
-	<a href="${ContextPath}/signUp.do">회원가입페이지</a>	
+
 </body>
 </html>

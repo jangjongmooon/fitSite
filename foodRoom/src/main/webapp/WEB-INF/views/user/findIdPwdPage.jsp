@@ -11,6 +11,13 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
+<style>
+body {
+	width:	500px;
+	height:	300px;
+}
+</style>
+
 <script>
 function findViewDisplay(){
     if($('input:radio[id=findId]').is(':checked')) {
@@ -71,39 +78,36 @@ $(document).ready(function() {
 
 <body>
 	<div class="findField">
-		<span>아이디 / 비밀번호 찾기</span><br/>
-		<input type="radio" name="findView" id="findId"  onchange="findViewDisplay()" checked/> 아이디 찾기
-		<input type="radio" name="findView" id="findPwd" onchange="findViewDisplay()" /> 비밀번호 찾기
+		<div id="findFieldSelect">
+			<input type="radio" name="findView" id="findId"  onchange="findViewDisplay()" checked/> 아이디 찾기
+			<input type="radio" name="findView" id="findPwd" onchange="findViewDisplay()" /> 비밀번호 찾기
+		</div>
 		<table id="idFindTable">
 			<tr>
-				<td>이름</td>
-				<td><input type="text" name="fr_name" id="find_id_name" placeholder="이름 입력" /></td>
+				<td><input type="text" name="fr_name" id="find_id_name" class="findInfo" placeholder="이름 입력" /></td>
 			</tr>
 			<tr>
-				<td>이메일</td>
-				<td><input type="text" name="fr_email" id="find_id_email" placeholder="이메일 입력" /></td>
+				<td><input type="text" name="fr_email" id="find_id_email" class="findInfo" placeholder="이메일 입력" /></td>
 			</tr>
 			<tr>
 				<td><button type="button" id="findIdBtn">아이디 찾기</button></td>
 			</tr>
 			<tr>
-				<td id="findIdView">찾은 아이디 보여주는 영역</td>
+				<td id="findIdView"></td>
 			</tr>
 		</table>
 		<table id="pwdFindTable" style="display:none;">
 			<tr>
-				<td>아이디</td>
-				<td><input type="text" name="fr_id" id="find_pwd_id" placeholder="아이디 입력" /></td>
+				<td><input type="text" name="fr_id" id="find_pwd_id" class="findInfo" placeholder="아이디 입력" /></td>
 			</tr>
 			<tr>
-				<td>이메일</td>
-				<td><input type="text" name="fr_email" id="find_pwd_email" placeholder="이메일 입력" /></td>
+				<td><input type="text" name="fr_email" id="find_pwd_email" class="findInfo" placeholder="이메일 입력" /></td>
 			</tr>
 			<tr>
 				<td><button type="button" id="findPwdBtn">비밀번호 찾기</button></td>
 			</tr>
 			<tr>
-				<td id="findPwdView">찾은 비밀번호 보여주는 영역</td>
+				<td id="findPwdView"></td>
 			</tr>
 		</table>
 	</div>

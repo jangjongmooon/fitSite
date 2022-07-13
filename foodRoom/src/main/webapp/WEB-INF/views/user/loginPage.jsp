@@ -22,34 +22,29 @@
 	</c:choose>
 </head>
 
-
-
 <body>
-
-<div id="loginField">
-	<form method="post" name="loginFieldForm" id="loginForm" action="${contextPath}/login.do">
-		<table class="loginTable">
-			<tr>
-				<th><span>로그인</span></th>
-			</tr>
-			<tr>
-				<td><span>ID</span></td>
-				<td><input type="text" name="fr_id" placeholder="ID 입력" /></td>
-			</tr>
-			<tr>
-				<td><span>PWD</span></td>
-				<td><input type="password" name="fr_pwd" placeholder="PWD 입력" /></td>
-			</tr>
-			<tr>
-				<td><button type="submit" id="loginBtn">로그인</button></td>
-			</tr>
-			<tr>
-				<td><a href="${contextPath}/goFindIdPwdPage.do" onclick="window.open(this.href,'_blank','width=500,height=500, scrollbars=no, resizable=no');return false;" class="">아이디/비밀번호 찾기</a></td>
-				<td><a href="${contextPath}/signUpPage.do" class="">회원가입</a></td>
-			</tr>
-		</table>
-	</form>
-</div>
-
+	<div id="loginField">
+		<div><a href="${contextPath}/index.do" class="loginFieldLogo">FOODROOM</a></div>
+		<form method="post" name="loginFieldForm" id="loginForm" action="${contextPath}/login.do">
+			<table class="loginTable">
+				<tr>
+					<th colspan=2><span>로그인</span></th>
+				</tr>
+				<tr>
+					<td colspan=2><input type="text" name="fr_id" class="loginInfo" placeholder="ID 입력" /></td>
+				</tr>
+				<tr>			
+					<td colspan=2><input type="password" name="fr_pwd" class="loginInfo" placeholder="PWD 입력" /></td>
+				</tr>
+				<tr>
+					<td colspan=2><button type="submit" class="btn-gradient">로그인</button></td>
+				</tr>
+				<tr>
+					<td><a href="${contextPath}/goFindIdPwdPage.do" onclick="window.open(this.href,'_blank','top=200,left=200,width=500,height=300, scrollbars=no, resizable=no');return false;">아이디/비밀번호 찾기</a>
+					<td><a href="${contextPath}/signUpPage.do">회원가입</a></td>
+				</tr>
+			</table>
+		</form>
+	</div>
 </body>
 </html>

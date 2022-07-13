@@ -7,6 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>마이페이지 변경하기</title>
+	<link href="${contextPath}/css/foodroom.css" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
@@ -107,22 +108,22 @@ function pwTest() {
 
 <body>
 	<div id="updateMyPageField">
-		<form method="post" name="updateMyPageForm">
+		<form method="post" name="updateMyPageForm" id="myPageUpdateForm">
 			<table class="myPageUpdateTable">
 				<tr>
-					<th colspan=2><span>MyPage Update</span></th>
+					<th colspan=2><span>프로필 수정</span></th>
 				</tr>
 				<tr>
 					<td>아이디</td>
-					<td><input type="text" id="fr_id" name="fr_id" value="${fr_id}" readonly/></td>
+					<td><input type="text" id="fr_id" name="fr_id" class="myPageUpdateInfo" value="${fr_id}" readonly/></td>
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input type="password" id="fr_pwd" name="fr_pwd" oninput="pwTest();"/></td>
+					<td><input type="password" id="fr_pwd" name="fr_pwd" class="myPageUpdateInfo" oninput="pwTest();"/></td>
 				</tr>
 				<tr>
 					<td>비밀번호 확인</td>
-					<td><input type="password" id="repwd" name="repwd" oninput="pwTest();"/></td>
+					<td><input type="password" id="repwd" name="repwd" class="myPageUpdateInfo" oninput="pwTest();"/></td>
 				</tr>
 				<tr>
 					<td><span class="">√ 비밀번호 일치 체크 : </span></td>
@@ -130,18 +131,18 @@ function pwTest() {
 				</tr>
 				<tr>
 					<td>이름</td>
-					<td><input type="text" id="fr_name" name="fr_name" value="${fr_name}" /></td>
+					<td><input type="text" id="fr_name" name="fr_name" class="myPageUpdateInfo" value="${fr_name}" /></td>
 				</tr>
 				<tr>
 					<td>연락처</td>
-					<td><input type="text" id="fr_p_number" name="fr_p_number" value="${fr_p_number}" /></td>
+					<td><input type="text" id="fr_p_number" name="fr_p_number" class="myPageUpdateInfo" value="${fr_p_number}" /></td>
 				</tr>
 				<tr>
 					<td>이메일</td>
-					<td><input type="text" id="fr_email" name="fr_email" value="${fr_email}" /></td>
+					<td><input type="text" id="fr_email" name="fr_email" class="myPageUpdateInfo" value="${fr_email}" /></td>
 				</tr>
 				<tr>	
-					<td><button type="button" id="updateMyPageBtn">수정완료</button></td>
+					<td colspan=2><button type="button" id="updateMyPageBtn">수정완료</button></td>
 				</tr>
 			</table>
 		</form>
