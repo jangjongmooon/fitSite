@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"	uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt"	uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%	request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
@@ -15,7 +14,7 @@
 		<link href="${contextPath}/css/ezen.css" rel="stylesheet">    		
 </head>
 <script>
-var fr_no = "<c:out value='${fr_no}'/>";		// 업체 번호 가져오기
+var fr_no 	 = "<c:out value='${fr_no}'/>";		// 업체 번호 가져오기
 var personNo = "<c:out value='${personNo}'/>";  // 회원이 선택한 인원 수 가져오기
 
 $(function() {
@@ -73,6 +72,7 @@ $(function() {
 				<tr>
 					<td>예약날짜 : </td>
 		      		<td><input type="text" id="SelectDate" value="" placeholder="날짜선택" readonly/></td>
+		      		<td> 선택한 날짜 : ${date}</td>
 				</tr>
 			</table>
 		</form>

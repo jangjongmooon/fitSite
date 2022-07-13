@@ -208,6 +208,7 @@ public class OwnerControllerImpl implements OwnerController {
 	//-----------------------------------------------------------------------------------------------------------
 	// 예약 현황 보기
 	//-----------------------------------------------------------------------------------------------------------
+	@ResponseBody
 	@RequestMapping(value="/revUserList.do", method=RequestMethod.POST)
 	public List<ReservationDTO> revUserList(@RequestParam("fr_room_no") int fr_room_no, @RequestParam("fr_reservation_date") String fr_reservation_date,
 		   HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -178,11 +178,10 @@ function nextCalendar() {	// 달 앞으로 가기 기능.
 </script>
 
 <body>
-<div>
+<div id="reservationField">
 	<table class="ownerCalenderLayout">
 		<tr>
 			<td>
-				<span class="calenderTitle">달력 스케쥴러</span><p/>
 				<table id="calendar" class="calendarList">
 					<tr class="calendarListTop">
 						<td onclick="prevCalendar()" class="calendarListTop"><span> ◀ 이전 달 </span></td>

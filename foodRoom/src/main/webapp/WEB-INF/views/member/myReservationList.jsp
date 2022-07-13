@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c"	uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt"	uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <%	request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
@@ -45,7 +44,7 @@ $(document).on('click', '.cancleReservation', function(){
 	<div><span class="">예약현황</span></div> 
         		
 	<c:forEach var="myReservationList" items="${myReservationList}" varStatus="status">		
-		<div class="lookRoomView1">
+		<div style="border: 1px solid black; min-height: 100px;">
 			<c:if test="${myReservationList.fr_room_image != null}">
 				<img src="${contextPath}/roomImg/${myReservationList.fr_no}/${myReservationList.fr_room_image}" width="300" height="100" style="float:left;">
 			</c:if>
@@ -54,7 +53,7 @@ $(document).on('click', '.cancleReservation', function(){
 			</c:if>
 			<span>룸 번호		: </span>${myReservationList.fr_room_no}<br/>
 			<span>예약인원  	: </span>${myReservationList.fr_reservation_person_no}<br/>
-			<span>예약일자 		: </span>${myReservationList.fr_reservation_date}
+			<span>예약일자 	: </span>${myReservationList.fr_reservation_date}
 			<span>예약자	 	: </span>${myReservationList.fr_name}
 			<div>
 				<span style="display:none;">${myReservationList.fr_room_no}</span>

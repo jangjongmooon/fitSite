@@ -31,7 +31,7 @@ var fr_reservation_date = param.get('fr_reservation_date');
 
 
 //ajax로 가져온 데이터 클릭 이벤트 안될 시 $(".reservationBtn").click(function() ==> $(document).on('click', '.reservationBtn', function()
-	$(document).on('click', '.reservationBtn', function(){
+	$(document).on('click', '.reservationBtn', function() {
 	    
 	    var reservationBtn = $(this);
 	    var row = reservationBtn.parents();
@@ -52,20 +52,20 @@ var fr_reservation_date = param.get('fr_reservation_date');
 	           		+'<th>회원연락처</th>'
 	            	+'<th>예약정원</th></tr>';
 	            
-	            if(data.length>=1){
-	            $(data).each(function(r, item){
+	            if(data.length>=1) {
+	           		$(data).each(function(r, item) {
 			              tr	+=	'<tr><td>'+ data[r].fr_reservation_date + '</td>'
-			              		+'<td>'+ data[r].fr_name + '</td>'
-			              		+'<td>'+ data[r].fr_p_number + '</td>'
-			              		+'<td>'+ data[r].fr_reservation_person_no+'</td></tr>';
-	            });
-	            }
-	           $("#reservatioinList").html(tr);
+			              		+	'<td>'+ data[r].fr_name + '</td>'
+			              		+	'<td>'+ data[r].fr_p_number + '</td>'
+			              		+	'<td>'+ data[r].fr_reservation_person_no+'</td></tr></table>';
+			              $("#reservatioinList"+data[r].fr_room_no).html(tr);      		
+	            	});
+	            }           
 	        }
 	    });    
 	});
 	
-	$(document).on('click', '#dayOff', function(){
+	$(document).on('click', '#dayOff', function() {
 		var arr = new Array();
 		<c:forEach items="${revRoomList}" var="revRoomList">
 			arr.push({
@@ -76,13 +76,12 @@ var fr_reservation_date = param.get('fr_reservation_date');
 			alert("예약된 룸이 있습니다");
 			return false;
 		}
-	});
-	
+	});	
 });
 </script>
 <body>
-	<div style="width:100%; height:100%; overflow:scroll;">
-		<div style="width:100%; height:4%;">
+	<div id="reservationFormField">
+		<div class="reservationFormDay">
 			<!-- 휴일 지정 버튼 누르면 휴일지정 버튼 안보여주고 휴일취소버튼 보여주기 <> 반대로도 활성화 시키기 
 				 휴일 지정은 예약된 정보가 없는 경우만 가능
 				 휴일 지정하면 달력에 날짜표시 빨간색으로 변경하기 -->
@@ -101,22 +100,26 @@ var fr_reservation_date = param.get('fr_reservation_date');
 			<span>예약 가능</span><hr/>
 			<!-- for문 조건:예약가능한 -->
 			<c:forEach var="frRoomNoList" items="${frRoomNoList}">
-				<div style="min-height:120px;">
+				<div class="reservationPossibleField">
 					<c:if test="${frRoomNoList.fr_room_image != null}">
 						<img id="loomImage" usemap="" width="300" height="120" src="${contextPath}/roomImg/${frRoomNoList.fr_no}/${frRoomNoList.fr_room_image}" style="float:left;"/>
 					</c:if>
 					<c:if test="${frRoomNoList.fr_room_image == null}">
 						<img id="loomImage" usemap="" width="300" height="120" src="${contextPath}/roomImg/imsi/logo.png" style="float:left;"/>
 					</c:if>
-					<span class="">룸이름 : </span>
-					<span class="">${frRoomNoList.fr_room_name}</span><br/>							
+					<br/>
+					<span class="">룸이름</span>
+					<br/>
+					<span class="">${frRoomNoList.fr_room_name}</span>
+					<br/>
+					<br/>							
 					<span class="">룸정원 : </span>
 					<span class="">${frRoomNoList.fr_room_person_no}</span>
-					<div>				
+					<div class="offReservationBtnField">				
 					<span class="test"></span>
 						<a href="${contextPath}/ownerRevOk.do?fr_room_no=${frRoomNoList.fr_room_no}&fr_reservation_date=${fr_reservation_date}" 
 												onclick="return confirm('[${frRoomNoList.fr_room_name}] 룸을 예약 처리 하시겠습니까?');" class="">
-												<button type="button" id="">오프라인 예약</button></a>
+												<button type="button" class="reservationFormBtn">오프라인 예약</button></a>
 					</div>
 				</div>	
 			</c:forEach>	
@@ -126,30 +129,36 @@ var fr_reservation_date = param.get('fr_reservation_date');
 			<span>예약 완료</span><hr/>
 			<!-- for문 조건:예약불가능한 -->
 			<c:forEach var="revRoomList" items="${revRoomList}">
-				<div style="min-height:120px;">
+				<div class="reservatioinImpossibleField">
 					<c:if test="${revRoomList.fr_room_image != null}">
 						<img id="loomImage" usemap="" width="300" height="120" src="${contextPath}/roomImg/${revRoomList.fr_no}/${revRoomList.fr_room_image}" style="float:left;"/>
 					</c:if>
 					<c:if test="${revRoomList.fr_room_image == null}">
 						<img id="loomImage" usemap="" width="300" height="120" src="${contextPath}/roomImg/imsi/logo.png" style="float:left;"/>
 					</c:if>
-					<span class="">룸이름 : </span>
-					<span class="">${revRoomList.fr_room_name}</span><br/>	
+					<br/>
+					<span class="">룸이름</span>
+					<br/>
+					<span class="">${revRoomList.fr_room_name}</span>
+					<br/>
+					<br/>	
 					<span class="">룸정원 : </span>
 					<span class="">${revRoomList.fr_room_person_no} 명</span>	
-					<div>
+					<div class="offReservationBtnField">
 						<span style="display:none;">${revRoomList.fr_room_no}</span>
-						<button type="button" class="reservationBtn">예약현황</button>
+						<button type="button" class="reservationBtn"
+				  			 onclick="document.getElementById('reservatioinList${revRoomList.fr_room_no}').style.display=(document.getElementById('reservatioinList${revRoomList.fr_room_no}').style.display=='none')?'block':'none';">
+				  			 예약현황
+		  				</button>
 						<a href="${contextPath}/cancleRev.do?fr_room_no=${revRoomList.fr_room_no}&fr_reservation_date=${fr_reservation_date}"
-									  			 onclick="return confirm('[${revRoomList.fr_room_name}] 룸을 예약 취소 하시겠습니까?');" class="">
-							<button type="button" id="">예약취소</button>
+								onclick="return confirm('[${revRoomList.fr_room_name}] 룸을 예약 취소 하시겠습니까?');" class="">
+								<button type="button" class="reservationFormBtn">예약취소</button>
 						</a>
 					</div>
+					<div id="reservatioinList${revRoomList.fr_room_no}" style="display:none;"></div>
 				</div>
 			</c:forEach>
 		</div>
-			<div id="reservatioinList"></div>
-	</div>
-	
+	</div>	
 </body>
 </html>
