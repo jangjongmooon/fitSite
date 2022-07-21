@@ -21,6 +21,7 @@ function readURL(input) {
 		reader.readAsDataURL(input.files[0]);
 	}
 }
+
 $(document).ready(function() {
 	
 	$(".addRoomBtn").on("click", function() {
@@ -28,11 +29,27 @@ $(document).ready(function() {
 		
 	});
 	
-	
 	// 기입한 룸정보에 대한 유효성 검사
-	$("#addBtn").on("click", function() {
+	$("#addBtn").on("click", function() {  
 	   
-	   
+		 var roomNameRegExp 	= /^[a-zA-Z0-9가-힣]{1,12}$/; // 룸이름 유효성검사
+		 var roomPersonRegExp	= /^[0-9]{1,4}$/;  			 // 룸정원 유효성검사
+		  
+		 var objRoomName    = document.getElementById("fr_room_name"); 	 // 룸이름 입력값 받기
+		 var objRoomPerson  = document.getElementById("fr_room_person_no"); // 룸정원 입력값 받기
+		  
+		 // 룸이름 유효성 검사 영역
+		 if($("#fr_room_name").val() == '') {
+			alert("룸이름을 입력하십시오");
+		 	$("#fr_room_name").focus();
+			return false;
+		 }
+		 if(!roomNameRegExp.test(objRoomName.value)) {
+            alert("이름에 특수문자,영어,숫자는 사용할수 없습니다. 한글만 입력하여주세요.");
+            $("#fr_room_name").focus();
+            return false;
+         }
+		  
 	   document.addRoomInfoForm.action="${contextPath}/addRoomInfoGo.do";
 	   document.addRoomInfoForm.submit();   
 	   
@@ -40,33 +57,6 @@ $(document).ready(function() {
 	   
 });
 
-
-$(document).on('click', '.deleteRoom', function(){
-	if (confirm("정말 방을 삭제 하시겠습니까?") == true) {
-		var deleteRoom = $(this);
-		
-		var row = deleteRoom.parent();
-		var tr	= row.children();
-		
-		var rfr_room_no		= tr.eq(0).text();
-		var rfr_no			= tr.eq(1).text();
-		var rfr_room_name	= tr.eq(2).text();
-		alert(rfr_room_no+ ", " + rfr_no);
-		
-		$.ajax({
-			type:		"POST",
-			url:		"${contextPath}/room/delete.do",
-			dataType:	"json",
-			async:		false,
-			success:	function(data) {
-				alert(rfr_room_name + "방이 삭제 처리 되었습니다.");
-				location.reload();
-			}
-		});
-	}else{
-		return;
-	}
-});
 </script>
 
 <body>
@@ -83,7 +73,7 @@ $(document).on('click', '.deleteRoom', function(){
 						<img src="${contextPath}/roomImg/${roomList.fr_no}/${roomList.fr_room_image}" width="300" height="120" style="float:left;">
 					</c:if>
 					<c:if test="${roomList.fr_room_image == null}">
-						<img src="${contextPath}/roomImg/imsi/logo.png" width="300" height="100" style="float:left;">
+						<img src="${contextPath}/roomImg/imsi/logo.png" width="300" height="120" style="float:left;">
 					</c:if>
 					<br/>
 					<span>룸 이름  </span>
@@ -94,7 +84,9 @@ $(document).on('click', '.deleteRoom', function(){
 					<span>룸 정원 : </span>${roomList.fr_room_person_no}
 					<div class="roomListBtnField">
 						<button type="button" class="roomListBtn">수정</button>
-						<button type="button" class="deleteRoom roomListBtn">삭제</button>
+						<a href="${contextPath}/roomDelete.do?fr_room_no=${roomList.fr_room_no}&fr_no=${roomList.fr_no}&fr_room_name=${roomList.fr_room_name}"
+									  			 onclick="return confirm('[${roomList.fr_room_name}] 룸을 삭제 하시겠습니까?');">	
+						<button type="button" class="deleteRoom roomListBtn">삭제</button></a>
 					</div>
 				</div>
 			</c:if>
@@ -108,11 +100,18 @@ $(document).on('click', '.deleteRoom', function(){
 					<c:if test="${roomList.fr_room_image == null}">
 						<img src="${contextPath}/roomImg/imsi/logo.png" width="300" height="100" style="float:left;">
 					</c:if>
-					<span>룸 이름 : </span>${roomList.fr_room_name}<br/>
+					<br/>
+					<span style="border-bottom: 1px solid silver;">룸 이름 </span>
+					<br/>
+					${roomList.fr_room_name}
+					<br/>
+					<br/>
 					<span>룸 정원 : </span>${roomList.fr_room_person_no}
-					<div>
-						<button type="button" class="">수정</button>
-						<button type="button" class="deleteRoom">삭제</button>
+					<div class="roomListBtnField">
+						<button type="button" class="roomListBtn">수정</button>
+						<a href="${contextPath}/roomDelete.do?fr_room_no=${roomList.fr_room_no}&fr_no=${roomList.fr_no}&fr_room_name=${roomList.fr_room_name}"
+									  			 onclick="return confirm('[${roomList.fr_room_name}] 룸을 삭제 하시겠습니까?');">	
+						<button type="button" class="deleteRoom roomListBtn">삭제</button></a>
 					</div>
 				</div>
 			</c:if>
@@ -124,18 +123,6 @@ $(document).on('click', '.deleteRoom', function(){
 		<form name="addRoomInfoForm" method="post" enctype="multipart/form-data">
 			<input class="" type="text" name="fr_no" value="${room_no}" readonly style="display:none;"/>
 			<table class="addRoomInfoFormTable">	
-				<tr style="float:left;">
-					<td colspan=2>
-						<span class="">[미리보기]</span><br/>
-						<div class="">
-						<input id="asd" type="file" name="fr_room_image" onchange="readURL(this);" style="display:none;"/>
-						</div>	
-						<img id="addd" width="220" height="120" style="float:left;"/>
-						<div>
-							<label for="asd" class="">▶룸 이미지 첨부</label>
-						</div>
-					</td>
-				</tr>
 				<tr style="float:right;">
 					<td class="roomInfoTd">
 						<br>
@@ -147,10 +134,22 @@ $(document).on('click', '.deleteRoom', function(){
 						<span>룸 정원 </span>
 						<input class="roomNameNo" type="number" min="1" max="100" name="fr_room_person_no" id="fr_personNo" value="1"/>
 					</td>
+				</tr>
+				<tr style="float:left;">
+					<td colspan=2>
+						<span class="">[미리보기]</span><br/>
+						<div class="">
+						<input id="asd" type="file" name="fr_room_image" onchange="readURL(this);" style="display:none;"/>
+						</div>	
+						<img id="addd" width="220" height="120" style="float:left;"/>
+						<div>
+							<label for="asd" class="">▶룸 이미지 첨부</label>
+						</div>
+					</td>
 				</tr>	
 				<tr>
 					<td colspan=2>	
-						<button id="addBtn" class="roomInfoBtn">룸 추가하기</button>
+						<button type="button" id="addBtn" class="roomInfoBtn">룸 추가하기</button>
 						<button type="button" class="roomInfoBtn" onclick="location.href=''">취소하기</button>
 					</td>
 				</tr>	

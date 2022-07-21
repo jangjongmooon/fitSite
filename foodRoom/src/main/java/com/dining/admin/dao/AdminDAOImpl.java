@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dining.dto.RoomDTO;
 import com.dining.dto.StoreDTO;
@@ -95,5 +96,15 @@ public class AdminDAOImpl implements AdminDAO {
 		int result = sqlSession.insert("mapper.room.addRoomImage", roomDTO);
 		return result;
 	}
+	
+	//-----------------------------------------------------------------------------------------------------------
+	// 룸 삭제하기
+	//-----------------------------------------------------------------------------------------------------------
+	@Override
+	public int roomDelete(@RequestParam("fr_room_no") int fr_room_no) throws DataAccessException {
+		int result = sqlSession.delete("mapper.room.roomDelete", fr_room_no);
+		return result;
+	}
+	
 	
 }

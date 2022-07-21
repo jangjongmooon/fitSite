@@ -242,6 +242,41 @@ public class AdminControllerImpl implements AdminController {
 		}
 		
 		return roomImageMap;
-	}	
+	}
+	
+	//-----------------------------------------------------------------------------------------------------------
+	// 룸 삭제하기
+	//-----------------------------------------------------------------------------------------------------------
+	@Override
+	@RequestMapping(value="/roomDelete.do", method=RequestMethod.GET)
+	public ModelAndView roomDelete(@RequestParam("fr_room_no") int fr_room_no, @RequestParam("fr_no") int fr_no, @RequestParam("fr_room_name") String fr_room_name,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		System.out.println("화면에서 가져온 fr_room_no ==> " + fr_room_no);
+		System.out.println("화면에서 가져온 fr_no ==> " + fr_no);
+		System.out.println("화면에서 가져온 fr_room_no ==> " + fr_room_name);
+		
+		// 룸 이미지의 실제 디렉토리 삭제하기
+		try {
+			String path = "C:\\data\\room_image\\" + fr_no + "\\" + fr_no + "-" + fr_room_name + ".jpg";  // 디렉토리가 저장되어있는 경로 + 저장된 이미지의 이름
+			File file = new File(path);
+			
+			if(file.delete()) {
+				System.out.println("파일을 삭제하였습니다.");
+			} else {
+				System.out.println("파일 삭제에 실패하였습니다.");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		// DB에서 룸 정보 삭제하기
+		int result = adminDAO.roomDelete(fr_room_no);
+		System.out.println("result 성공여부 ==> " + result);
+		
+		ModelAndView mav = new ModelAndView("redirect:/goRoomListPage.do");
+		mav.addObject("fr_no", fr_no);
+		return mav;
+	}
 		
 }

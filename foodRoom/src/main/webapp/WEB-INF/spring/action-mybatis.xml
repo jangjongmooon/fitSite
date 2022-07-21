@@ -33,6 +33,7 @@
 	</bean>
 
 	<!-- component-scan을 이용하여 해당 패키지를 스캔하게 된다. -->
+	<context:component-scan base-package="com.dining.vo"></context:component-scan>
 	<context:component-scan base-package="com.dining.dto"></context:component-scan>
 	<context:component-scan base-package="com.dining.user"></context:component-scan>
 	<context:component-scan base-package="com.dining.user.controller"></context:component-scan>

@@ -11,57 +11,48 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <script>
-$(document).on('click', '.cancleReservation', function(){
-	if (confirm("정말 예약을 취소 하시겠습니까?") == true) {
-		var deleteRoom = $(this);
-		
-		var row = cancleReservation.parent();
-		var tr	= row.children();
-		
-		var rfr_room_no		= tr.eq(0).text();
-		alert(rfr_room_no+ ", " + rfr_no);
-		
-		$.ajax({
-			type:		"POST",
-			url:		"${contextPath}/",
-			dataType:	"json",
-			async:		false,
-			success:	function(data){
-				alert(rfr_room_no + "예약이 취소 되었습니다.");
-				location.reload();
-			}
-		});
-	}else{
-		return;
-	}
-});
+$('#mail-Check-Btn').click(function() {
+	const eamil = $('#userEmail1').val() + $('#userEmail2').val(); // 이메일 주소값 얻어오기!
+	console.log('완성된 이메일 : ' + eamil); // 이메일 오는지 확인
+	const checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
+	
+	$.ajax({
+		type : 'get',
+		url : '<c:url value ="/user/mailCheck?email="/>'+eamil, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+		success : function (data) {
+			console.log("data : " +  data);
+			checkInput.attr('disabled',false);
+			code =data;
+			alert('인증번호가 전송되었습니다.')
+		}			
+	}); // end ajax
+}); // end send eamil
 
 </script>
 
 <body>
-<div class="">	
+<div>	
 		
-	<div><span class="">예약현황</span></div> 
-        		
-	<c:forEach var="roomList" items="${roomList}" varStatus="status">		
-		<div class="lookRoomView1">
-			<c:if test="${roomList.fr_room_image != null}">
-				<img src="${contextPath}/roomImg/${roomList.fr_no}/${roomList.fr_room_image}" width="300" height="100" style="float:left;">
-			</c:if>
-			<c:if test="${roomList.fr_room_image == null}">
-				<img src="${contextPath}/roomImg/imsi/logo.png" width="300" height="100" style="float:left;">
-			</c:if>
-			<span>룸 번호		: </span>${roomList.fr_room_no}<br/>
-			<span>예약인원  	: </span>${roomList.fr_reservation_person_no}<br/>
-			<span>예약일자 	: </span>${roomList.fr_reservation_date}
-			<span>예약자	 	: </span>${roomList.fr_name}
-			<div>
-				<span style="display:none;">${roomList.fr_room_no}</span>
-				<button type="button" class="">수정</button>
-				<button type="button" class="cancleReservation">예약취소</button>
-			</div>
-		</div>
-	</c:forEach>		 
+<div class="form-group email-form">
+	 <label for="email">이메일</label>
+	 <div class="input-group">
+	<input type="text" class="form-control" name="userEmail1" id="userEmail1" placeholder="이메일" >
+	<select class="form-control" name="userEmail2" id="userEmail2" >
+	<option>@naver.com</option>
+	<option>@daum.net</option>
+	<option>@gmail.com</option>
+	<option>@hanmail.com</option>
+	 <option>@yahoo.co.kr</option>
+	</select>
+	</div>   
+<div class="input-group-addon">
+	<button type="button" class="btn btn-primary" id="mail-Check-Btn">본인인증</button>
+</div>
+	<div class="mail-check-box">
+<input class="form-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" disabled="disabled" maxlength="6">
+</div>
+	<span id="mail-check-warn"></span>
+</div>		 
 	
 </div>
 </body>

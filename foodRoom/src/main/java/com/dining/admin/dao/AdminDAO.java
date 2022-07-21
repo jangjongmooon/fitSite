@@ -3,6 +3,7 @@ package com.dining.admin.dao;
 import java.util.List;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dining.dto.RoomDTO;
 import com.dining.dto.StoreDTO;
@@ -48,5 +49,10 @@ public interface AdminDAO {
 	//  룸 정보 추가
 	//-----------------------------------------------------------------------------------------------------------
 	public int addRoomImage(RoomDTO roomDTO) throws DataAccessException;
+	
+	//-----------------------------------------------------------------------------------------------------------
+	// 룸 삭제하기
+	//-----------------------------------------------------------------------------------------------------------
+	public int roomDelete(@RequestParam("fr_room_no") int fr_room_no) throws DataAccessException;
 	
 }

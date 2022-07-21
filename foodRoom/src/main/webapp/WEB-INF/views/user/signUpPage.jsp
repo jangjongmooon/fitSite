@@ -77,20 +77,55 @@
 		   }
 		
 	}
-	
-	$(document).ready(function() {				
+
+	$(document).ready(function() {
+		
+		$('#mail-Check-Btn').click(function() {
+			var eamil = $('#fr_email1').val() + $('#fr_email2').val(); // 이메일 주소값 얻어오기!
+			alert('완성된 이메일 : ' + eamil); // 이메일 오는지 확인
+			var checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
+			
+			$.ajax({
+				type : 'get',
+				url : '<c:url value ="/mailCheck.do?email="/>'+eamil, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+				success : function (data) {
+					console.log("data : " +  data);
+					checkInput.attr('disabled',false);
+					code =data;
+					alert('인증번호가 전송되었습니다.')
+				}			
+			}); // end ajax
+		}); // end send eamil
+		
+		// 인증번호 비교 
+		// blur -> focus가 벗어나는 경우 발생
+		$('.mail-check-input').blur(function () {
+			const inputCode = $(this).val();
+			const $resultMsg = $('#mail-check-warn');
+			
+			if(inputCode === code){
+				$resultMsg.html('인증번호가 일치합니다.');
+				$resultMsg.css('color','green');
+				$('#mail-Check-Btn').attr('disabled',true);
+				$('#userEamil1').attr('readonly',true);
+				$('#userEamil2').attr('readonly',true);
+				$('#userEmail2').attr('onFocus', 'this.initialSelect = this.selectedIndex');
+		         $('#userEmail2').attr('onChange', 'this.selectedIndex = this.initialSelect');
+			}else{
+				$resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
+				$resultMsg.css('color','red');
+			}
+		});
 		
 		$("#signUpBtn").on("click", function() {
 			
 			var RegExp = /^[a-zA-Z0-9]{4,12}$/; // 비밀번호 유효성 검사		
 		    var n_RegExp = /^[가-힣]{2,12}$/; //이름 유효성검사
 		    var p_RegExp = /^(?:(010-\d{4})|(01[1|6|7|8|9]-\d{3,4}))-(\d{4})$/; // 연락처 유효성 검사
-  			var e_RegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i; // 이메일 유효성 검사
 		    
 		    var objPwd     = document.getElementById("fr_pwd"); 	 // 비밀번호 입력값 받기
 		    var objName    = document.getElementById("fr_name"); 	 // 이름 입력값 받기
-		    var objPnumber = document.getElementById("fr_p_number"); // 연락처 입력값 받기
-		    var objEmail   = document.getElementById("fr_email"); 	 // 이메일 입력값 받기
+		    var objPnumber = document.getElementById("fr_p_number"); // 연락처 입력값 받기		  
 		    
 		    // 비밀번호 유효성 검사 영역
 			if($("#fr_pwd").val() == '') {
@@ -137,18 +172,6 @@
 		         $("#fr_p_number").focus();
 		         return false;
 		     }
-			
-			// 이메일 주소 유효성 검사 영역
-			if($("#fr_email").val() == '') {
-				alert("이메일을 입력하십시오");
-				$("#fr_email").focus();
-				return false;
-			}        
-	        if(!e_RegExp.test(objEmail.value)) {
-	            alert("올바른 이메일 주소를 입력해 주세요. ex) ezenfit@ezenfit.com");
-	            $("#fr_email").focus();
-	            return false;
-	        }
 	        
 			document.signUpForm.action = "${contextPath}/signUp.do";
 			document.signUpForm.submit();
@@ -193,7 +216,23 @@
 					<td><input type="text" name="fr_p_number" id="fr_p_number" placeholder="연락처 입력" class="signUpInfo" /></td>
 				</tr>
 				<tr>
-					<td><input type="text" name="fr_email" id="fr_email" placeholder="이메일 입력" class="signUpInfo" /></td>
+					<td>
+						<input type="text" name="fr_email1" id="fr_email1" placeholder="이메일 입력" class="signUpInfo" />
+						<select name="fr_email2" id="fr_email2">
+							<option>@naver.com</option>
+							<option>@daum.net</option>
+							<option>@gmail.com</option>
+						</select>
+					</td>
+					<td>
+						<button type="button" class="btn btn-primary" id="mail-Check-Btn">본인인증</button>
+					</td>
+				</tr>
+				<tr>
+					<td><input class="from-control mail-check-input" placeholder="인증번호 6자리를 입력해주세요" disabled="disabled" maxlength="6"></td>					
+				</tr>
+				<tr>
+					<td><span id="mail-check-warn"></span></td>
 				</tr>
 				<tr>
 					<td><button type="button" id="signUpBtn" disabled>가입하기</button></td>					

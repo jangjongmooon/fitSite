@@ -45,6 +45,13 @@
 		VALUES (#{fr_no}, #{fr_room_name}, #{fr_room_person_no}, #{fr_room_image})
 	</insert>
 	
+	<!-- 룸 삭제하기 -->
+	<delete id="roomDelete" parameterType="int">
+		DELETE FROM fr_room_info 
+		WHERE 	fr_room_no not in (select fr_room_no from fr_reservation where fr_room_no is not NULL)
+		AND 	fr_room_no  = #{fr_room_no}
+	</delete>
+		
 	<!-- 룸 목록 -->
 	<select id="roomList" parameterType="com.dining.dto.RoomDTO" resultMap="memResult">
 		SELECT	*
