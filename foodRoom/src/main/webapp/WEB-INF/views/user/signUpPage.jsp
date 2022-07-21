@@ -82,6 +82,7 @@
 		
 		$('#mail-Check-Btn').click(function() {
 			var eamil = $('#fr_email1').val() + $('#fr_email2').val(); // 이메일 주소값 얻어오기!
+			document.getElementById('fr_email').value = document.getElementById('fr_email1').value + document.getElementById('fr_email2').value
 			alert('완성된 이메일 : ' + eamil); // 이메일 오는지 확인
 			var checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
 			
@@ -110,7 +111,7 @@
 				$('#userEamil1').attr('readonly',true);
 				$('#userEamil2').attr('readonly',true);
 				$('#userEmail2').attr('onFocus', 'this.initialSelect = this.selectedIndex');
-		         $('#userEmail2').attr('onChange', 'this.selectedIndex = this.initialSelect');
+		        $('#userEmail2').attr('onChange', 'this.selectedIndex = this.initialSelect');
 			}else{
 				$resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
 				$resultMsg.css('color','red');
@@ -233,6 +234,9 @@
 				</tr>
 				<tr>
 					<td><span id="mail-check-warn"></span></td>
+				</tr>
+				<tr>
+					<td><input type="hidden" name="fr_email" id="fr_email" /></td>
 				</tr>
 				<tr>
 					<td><button type="button" id="signUpBtn" disabled>가입하기</button></td>					

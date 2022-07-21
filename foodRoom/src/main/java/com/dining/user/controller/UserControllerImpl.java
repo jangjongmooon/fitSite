@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,6 +34,9 @@ public class UserControllerImpl implements UserController {
 	
 	@Autowired
 	private UserDTO userDTO;
+	
+	@Autowired(required=false)
+	BCryptPasswordEncoder pwdEncoder;
 	
 	//-----------------------------------------------------------------------------------------------------------
 	// 메인 화면 불러오기 layout
@@ -87,6 +91,10 @@ public class UserControllerImpl implements UserController {
 		
 		System.out.println("controller signUp userDTO ==>" + userDTO);
 		
+		String inputPassWord = userDTO.getFr_pwd();
+		String pwd = pwdEncoder.encode(inputPassWord);
+		userDTO.setFr_pwd(pwd);
+		
 		int result = userDAO.signUp(userDTO);
 		
 		System.out.println("controller signUp 결과 ==>" + result);
@@ -126,37 +134,34 @@ public class UserControllerImpl implements UserController {
 	public ModelAndView login(@ModelAttribute("userDTO")UserDTO userDTO, RedirectAttributes rAttr, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		System.out.println("controller 로그인 ==> " + userDTO);
-		UserDTO loginInfo = userDAO.login(userDTO);
-		System.out.println("controller 로그인 결과 ==> " + loginInfo);
+		
+		
+		UserDTO loginInfo = userDAO.login(userDTO);	
+		boolean pwdMatch = pwdEncoder.matches(userDTO.getFr_pwd(), loginInfo.getFr_pwd());
 		
 		ModelAndView mav = new ModelAndView();
 		
-		if(loginInfo == null) { // 로그인 정보가 없을 경우
-			// 다시 로그인 페이지로
+		if(loginInfo.getFr_id().equals(userDTO.getFr_id()) && pwdMatch == true) { // 로그인 정보가 있는 경우
+			// 입력한 id, pwd 가 등록된 id, pwd와 같을 경우
+			// 세션 생성
+			HttpSession session = request.getSession();
+			
+			session.setAttribute("fr_id", loginInfo.getFr_id());
+			session.setAttribute("fr_pwd", loginInfo.getFr_pwd());
+			session.setAttribute("fr_name", loginInfo.getFr_name());
+			session.setAttribute("fr_p_number", loginInfo.getFr_p_number());
+			session.setAttribute("fr_email", loginInfo.getFr_email());
+			session.setAttribute("fr_class", loginInfo.getFr_class());
+			session.setAttribute("isLogOn", 	true);
+			session.setMaxInactiveInterval(60*120);
+			
+			mav = new ModelAndView("redirect:/index.do");
+			
+		} else { // 로그인 정보가 없는 경우
+	
 			rAttr.addAttribute("result", "loginFailed");
 			mav = new ModelAndView("redirect:/goLoginPage.do");
-			
-		} else { // 로그인 정보가 있는 경우
-			// 입력한 id, pwd 가 등록된 id, pwd와 같을 경우
-			if(loginInfo.getFr_id().equals(userDTO.getFr_id()) && loginInfo.getFr_pwd().equals(userDTO.getFr_pwd())) { 
-				
-				//  등록된 회원 로그인
-				// 세션 생성
-				HttpSession session = request.getSession();
-				
-				session.setAttribute("fr_id", loginInfo.getFr_id());
-				session.setAttribute("fr_pwd", loginInfo.getFr_pwd());
-				session.setAttribute("fr_name", loginInfo.getFr_name());
-				session.setAttribute("fr_p_number", loginInfo.getFr_p_number());
-				session.setAttribute("fr_email", loginInfo.getFr_email());
-				session.setAttribute("fr_class", loginInfo.getFr_class());
-				session.setAttribute("isLogOn", 	true);
-				session.setMaxInactiveInterval(60*120);
-				
-				mav = new ModelAndView("redirect:/index.do");
-								
-			}	
-		}
+		}		
 		return mav;
 	}
 	
